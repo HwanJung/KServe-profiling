@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: model-export-pod
+  namespace: kserve-test
+spec:
+  restartPolicy: Never
+  volumes:
+    - name: model-store
+      persistentVolumeClaim:
+        claimName: resnet-pvc
+  containers:
+    - name: tensorflow
+      image: tensorflow/tensorflow:2.16.1
+      command: ["sleep"]
+      args: ["infinity"]
+      volumeMounts:
+        - mountPath: /pv
+          name: model-store

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: model-store-pod
+  namespace: kserve-test
+spec:
+  volumes:
+    - name: model-store
+      persistentVolumeClaim:
+        claimName: resnet-pvc
+  containers:
+    - name: model-store
+      image: ubuntu
+      command: ["sleep"]
+      args: ["infinity"]
+      volumeMounts:
+        - mountPath: /pv
+          name: model-store

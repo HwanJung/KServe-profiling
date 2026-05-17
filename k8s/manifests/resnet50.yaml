@@ -1,0 +1,25 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: resnet50
+  namespace: kserve-test
+  annotations:
+    serving.kserve.io/enable-metric-aggregation: "true"
+    serving.kserve.io/enable-prometheus-scraping: "true"
+spec:
+  predictor:
+    minReplicas: 1
+    maxReplicas: 1
+    containerConcurrency: 0 # 무제한
+    model:
+      modelFormat:
+        name: tensorflow
+      runtime: kserve-tensorflow-serving
+      storageUri: "pvc://resnet-pvc/resnet/"
+      resources:
+        requests:
+          cpu: "2"
+          memory: "4Gi"
+        limits:
+          cpu: "2"
+          memory: "8Gi"
