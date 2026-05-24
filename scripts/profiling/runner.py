@@ -2,10 +2,9 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 import shutil
 import time
-from dataclasses import asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from .kserve import KServeClient
@@ -25,7 +24,8 @@ class Profiler:
     def __init__(self, args: argparse.Namespace) -> None:
         self.args = args
         self.results: list[RunResult] = []
-        self.baseline_best_by_cpu: dict[str, int] = {}
+        self.baseline_stable_by_cpu: dict[str, int] = {}
+        self.baseline_bounds_by_cpu: dict[str, dict] = {}
         self.saturation_failures: dict[str, str] = {}
         self.kserve = KServeClient(args)
         self.hey = HeyClient(args)
@@ -39,20 +39,20 @@ class Profiler:
             self.kserve.refresh_observability_revision()
 
         baseline_configs = self.run_baseline()
-        exploration_configs = self.run_exploration()
-        exploration_summaries = [
+        validation_configs = self.run_validation()
+        validation_summaries = [
             summarize_config(
                 config,
-                self.baseline_best_by_cpu[config.cpu],
-                {"exploration"},
+                self.baseline_stable_by_cpu[config.cpu],
+                {"validation"},
                 self.results,
                 self.args,
             )
-            for config in exploration_configs
+            for config in validation_configs
         ]
 
         final_summaries: list[CandidateSummary] = []
-        recommendation = pick_recommendation(exploration_summaries)
+        recommendation = pick_recommendation(validation_summaries)
         memory_revalidation: RunResult | None = None
 
         if recommendation is not None and recommendation.recommended_memory is not None:
@@ -68,7 +68,7 @@ class Profiler:
 
         payload = self.summary_payload(
             baseline_configs,
-            exploration_summaries,
+            validation_summaries,
             final_summaries,
             recommendation,
             memory_revalidation,
@@ -85,43 +85,208 @@ class Profiler:
             print_apply_start("baseline", config)
             self.prepare_config(config)
 
-            best_c = self.scan_baseline(config)
-            if best_c is None:
+            boundary = self.scan_baseline(config)
+            if boundary is None:
                 self.saturation_failures[cpu] = "no client concurrency passed SLO"
                 continue
 
-            if best_c == max(self.args.client_concurrencies):
+            self.baseline_bounds_by_cpu[cpu] = asdict(boundary)
+            if boundary.bad_c is None:
                 self.saturation_failures[cpu] = (
                     "saturation point not found; extend --client-concurrencies"
                 )
                 continue
 
-            self.baseline_best_by_cpu[cpu] = best_c
+            self.baseline_stable_by_cpu[cpu] = boundary.stable_c
         return configs
 
-    def scan_baseline(self, config: ProfileConfig) -> int | None:
-        best_c: int | None = None
-        for client_c in self.args.client_concurrencies:
-            runs = [
-                self.run_once("baseline", config, client_c, repeat)
-                for repeat in range(1, self.args.baseline_repeats + 1)
-            ]
-            if all(item.valid and item.passed_slo for item in runs):
-                best_c = client_c
-                continue
-            break
-        return best_c
+    def scan_baseline(self, config: ProfileConfig) -> BaselineBoundary | None:
+        measured: dict[int, BaselinePoint] = {}
+        coarse = sorted(set(self.args.client_concurrencies))
+        if not coarse:
+            return None
 
-    def run_exploration(self) -> list[ProfileConfig]:
+        last_good: BaselinePoint | None = None
+        bad: BaselinePoint | None = None
+        for client_c in coarse:
+            point = self.measure_baseline_point(
+                config,
+                client_c,
+                self.args.baseline_repeats,
+                "coarse",
+            )
+            measured[client_c] = point
+            if self.is_bad_boundary(last_good, point):
+                bad = point
+                break
+            last_good = point
+
+        if last_good is None:
+            return None
+        if bad is None:
+            return BaselineBoundary(
+                last_good_c=last_good.client_concurrency,
+                bad_c=None,
+                stable_c=last_good.client_concurrency,
+                refinement_method="none",
+                reason="saturation point not found",
+                bad_marginal_rps_efficiency=None,
+            )
+
+        method = self.refine_baseline_boundary(config, measured, last_good, bad)
+        return self.boundary_from_points(measured, method)
+
+    def measure_baseline_point(
+        self,
+        config: ProfileConfig,
+        client_concurrency: int,
+        repeats: int,
+        stage: str,
+    ) -> BaselinePoint:
+        runs = [
+            self.run_once(f"baseline_{stage}", config, client_concurrency, repeat)
+            for repeat in range(1, repeats + 1)
+        ]
+        passed = all(item.valid and item.passed_slo for item in runs)
+        prom_rps_values = [item.prom_rps_avg for item in runs if item.prom_rps_avg is not None]
+        prom_p95_values = [
+            item.prom_p95_seconds for item in runs if item.prom_p95_seconds is not None
+        ]
+        return BaselinePoint(
+            client_concurrency=client_concurrency,
+            passed=passed,
+            prom_rps_avg=(
+                sum(prom_rps_values) / len(prom_rps_values) if prom_rps_values else None
+            ),
+            prom_p95_worst=max(prom_p95_values) if prom_p95_values else None,
+        )
+
+    def refine_baseline_boundary(
+        self,
+        config: ProfileConfig,
+        measured: dict[int, BaselinePoint],
+        last_good: BaselinePoint,
+        bad: BaselinePoint,
+    ) -> str:
+        low_c = last_good.client_concurrency
+        high_c = bad.client_concurrency
+        method = "linear"
+
+        if high_c - low_c > self.args.refinement_linear_threshold:
+            method = "binary_then_linear"
+            while high_c - low_c > self.args.refinement_linear_threshold:
+                mid_c = (low_c + high_c) // 2
+                if mid_c in measured:
+                    break
+                point = self.measure_baseline_point(
+                    config,
+                    mid_c,
+                    self.args.refinement_repeats,
+                    "binary_refinement",
+                )
+                measured[mid_c] = point
+                if self.is_bad_boundary(measured[low_c], point):
+                    high_c = mid_c
+                else:
+                    low_c = mid_c
+
+        for client_c in range(low_c + 1, high_c):
+            if client_c in measured:
+                continue
+            measured[client_c] = self.measure_baseline_point(
+                config,
+                client_c,
+                self.args.refinement_repeats,
+                "linear_refinement",
+            )
+
+        self.confirm_boundary_points(config, measured)
+        return method
+
+    def confirm_boundary_points(
+        self,
+        config: ProfileConfig,
+        measured: dict[int, BaselinePoint],
+    ) -> None:
+        confirmed: set[int] = set()
+        while True:
+            boundary = self.boundary_from_points(measured, "confirmation")
+            if boundary is None or boundary.bad_c is None:
+                return
+
+            boundary_points = {boundary.last_good_c, boundary.bad_c}
+            pending = boundary_points - confirmed
+            if not pending:
+                return
+
+            for client_c in pending:
+                measured[client_c] = self.measure_baseline_point(
+                    config,
+                    client_c,
+                    self.args.refinement_repeats,
+                    "boundary_confirmation",
+                )
+                confirmed.add(client_c)
+
+    def boundary_from_points(
+        self,
+        measured: dict[int, BaselinePoint],
+        method: str,
+    ) -> BaselineBoundary | None:
+        last_good: BaselinePoint | None = None
+        first_bad: BaselinePoint | None = None
+        reason = "slo_failure"
+        bad_marginal_rps_efficiency: float | None = None
+
+        for client_c in sorted(measured):
+            point = measured[client_c]
+            if self.is_bad_boundary(last_good, point):
+                first_bad = point
+                if point.passed and last_good is not None:
+                    reason = "marginal_rps_efficiency"
+                    bad_marginal_rps_efficiency = marginal_rps_efficiency(last_good, point)
+                break
+            last_good = point
+
+        if last_good is None:
+            return None
+        return BaselineBoundary(
+            last_good_c=last_good.client_concurrency,
+            bad_c=first_bad.client_concurrency if first_bad else None,
+            stable_c=last_good.client_concurrency,
+            refinement_method=method,
+            reason=reason if first_bad else "saturation point not found",
+            bad_marginal_rps_efficiency=bad_marginal_rps_efficiency,
+        )
+
+    def is_bad_boundary(
+        self,
+        previous_good: BaselinePoint | None,
+        current: BaselinePoint,
+    ) -> bool:
+        if not current.passed:
+            return True
+        if previous_good is None:
+            return False
+        if previous_good.prom_rps_avg is None or previous_good.prom_rps_avg <= 0:
+            return False
+        if current.prom_rps_avg is None:
+            return False
+
+        marginal_efficiency = marginal_rps_efficiency(previous_good, current)
+        if marginal_efficiency is None:
+            return False
+        return marginal_efficiency < self.args.min_marginal_rps_efficiency
+
+    def run_validation(self) -> list[ProfileConfig]:
         configs: list[ProfileConfig] = []
-        for cpu, best_c in self.baseline_best_by_cpu.items():
-            for cc in container_concurrency_candidates(best_c):
-                config = ProfileConfig(cpu, self.args.fixed_memory, cc)
-                configs.append(config)
-                print_apply_start("exploration", config)
-                self.prepare_config(config)
-                for repeat in range(1, self.args.exploration_repeats + 1):
-                    self.run_once("exploration", config, best_c, repeat)
+        for cpu, stable_c in self.baseline_stable_by_cpu.items():
+            config = ProfileConfig(cpu, self.args.fixed_memory, stable_c)
+            configs.append(config)
+            print_apply_start("validation", config)
+            self.prepare_config(config)
+            for repeat in range(1, self.args.validation_repeats + 1):
+                self.run_once("validation", config, stable_c, repeat)
         return configs
 
     def run_memory_revalidation(
@@ -142,9 +307,7 @@ class Profiler:
                     f"{self.args.slo_p95_seconds:.6f}s"
                 )
         cpu_stability_failures = cpu_stability_failure_reasons(
-            config=config,
             args=self.args,
-            cpu_usage_avg=result.cpu_usage_avg,
             cpu_throttling_ratio_avg=result.cpu_throttling_ratio_avg,
             cpu_throttling_ratio_max=result.cpu_throttling_ratio_max,
         )
@@ -266,7 +429,7 @@ class Profiler:
     def summary_payload(
         self,
         baseline_configs: list[ProfileConfig],
-        exploration_summaries: list[CandidateSummary],
+        validation_summaries: list[CandidateSummary],
         final_summaries: list[CandidateSummary],
         recommendation: CandidateSummary | None,
         memory_revalidation: RunResult | None,
@@ -288,15 +451,17 @@ class Profiler:
                 "cpu_candidates": self.args.cpus,
                 "fixed_memory": self.args.fixed_memory,
                 "memory_headroom_factor": self.args.memory_headroom_factor,
-                "request_aggregation_window": "measurement_duration",
+                "request_aggregation_window": "measurement_duration_plus_scrape_lag",
                 "cpu_rate_window": self.args.cpu_rate_window,
                 "slo_p95_seconds": self.args.slo_p95_seconds,
                 "rps_diff_warn_ratio": self.args.rps_diff_warn_ratio,
                 "max_cpu_throttling_avg": self.args.max_cpu_throttling_avg,
                 "max_cpu_throttling_max": self.args.max_cpu_throttling_max,
-                "max_cpu_utilization_ratio_avg": self.args.max_cpu_utilization_ratio_avg,
+                "min_marginal_rps_efficiency": self.args.min_marginal_rps_efficiency,
+                "refinement_linear_threshold": self.args.refinement_linear_threshold,
             },
-            "baseline_best_by_cpu": self.baseline_best_by_cpu,
+            "baseline_stable_by_cpu": self.baseline_stable_by_cpu,
+            "baseline_bounds_by_cpu": self.baseline_bounds_by_cpu,
             "excluded_cpu_baselines": self.saturation_failures,
             "recommendation": asdict(recommendation) if recommendation else None,
             "memory_revalidation": asdict(memory_revalidation) if memory_revalidation else None,
@@ -304,30 +469,77 @@ class Profiler:
                 asdict(
                     summarize_config(
                         config,
-                        self.baseline_best_by_cpu.get(config.cpu, 0),
-                        {"baseline"},
+                        self.baseline_summary_client_concurrency(config.cpu),
+                        {
+                            "baseline_coarse",
+                            "baseline_binary_refinement",
+                            "baseline_linear_refinement",
+                            "baseline_boundary_confirmation",
+                        },
                         self.results,
                         self.args,
                     )
                 )
                 for config in baseline_configs
             ],
-            "exploration_summaries": [asdict(item) for item in exploration_summaries],
+            "validation_summaries": [asdict(item) for item in validation_summaries],
             "final_summaries": [asdict(item) for item in final_summaries],
             "excluded_candidates": excluded_candidates(
-                exploration_summaries + final_summaries,
+                validation_summaries + final_summaries,
                 self.args,
             ),
         }
 
+    def baseline_summary_client_concurrency(self, cpu: str) -> int:
+        stable_c = self.baseline_stable_by_cpu.get(cpu)
+        if stable_c is not None:
+            return stable_c
 
-def container_concurrency_candidates(best_c: int) -> list[int]:
-    candidates = {
-        max(1, math.floor(best_c / 2)),
-        best_c,
-        max(1, math.ceil(best_c * 1.5)),
-    }
-    return sorted(candidates)
+        bounds = self.baseline_bounds_by_cpu.get(cpu)
+        if bounds is not None:
+            return int(bounds["stable_c"])
+
+        if self.args.client_concurrencies:
+            return min(self.args.client_concurrencies)
+        return 0
+
+
+@dataclass(frozen=True)
+class BaselinePoint:
+    client_concurrency: int
+    passed: bool
+    prom_rps_avg: float | None
+    prom_p95_worst: float | None
+
+
+@dataclass(frozen=True)
+class BaselineBoundary:
+    last_good_c: int
+    bad_c: int | None
+    stable_c: int
+    refinement_method: str
+    reason: str
+    bad_marginal_rps_efficiency: float | None
+
+
+def marginal_rps_efficiency(
+    previous: BaselinePoint,
+    current: BaselinePoint,
+) -> float | None:
+    if previous.prom_rps_avg is None or previous.prom_rps_avg <= 0:
+        return None
+    if current.prom_rps_avg is None:
+        return None
+    if current.client_concurrency <= previous.client_concurrency:
+        return None
+
+    rps_growth_ratio = (current.prom_rps_avg - previous.prom_rps_avg) / previous.prom_rps_avg
+    concurrency_growth_ratio = (
+        current.client_concurrency - previous.client_concurrency
+    ) / previous.client_concurrency
+    if concurrency_growth_ratio <= 0:
+        return None
+    return rps_growth_ratio / concurrency_growth_ratio
 
 
 def print_apply_start(phase: str, config: ProfileConfig) -> None:

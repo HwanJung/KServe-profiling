@@ -23,9 +23,14 @@ class PrometheusClient:
         if cpu_query_start >= end_ts:
             cpu_query_start = start_ts
 
-        request_window = promql_duration(end_ts - start_ts)
-        latency_value = self.instant_value(self.latency_query(request_window), end_ts)
-        rps_value = self.instant_value(self.rps_query(request_window), end_ts)
+        measurement_seconds = end_ts - start_ts
+        request_eval_ts = end_ts + self.args.scrape_lag_seconds
+        request_window = promql_duration(measurement_seconds + self.args.scrape_lag_seconds)
+        latency_value = self.instant_value(self.latency_query(request_window), request_eval_ts)
+        rps_value = self.instant_value(
+            self.rps_query(request_window, measurement_seconds),
+            request_eval_ts,
+        )
         cpu_values = self.range_values(self.cpu_usage_query(), cpu_query_start, end_ts)
         throttling_values = self.range_values(
             self.cpu_throttling_query(), cpu_query_start, end_ts
@@ -63,7 +68,7 @@ class PrometheusClient:
 histogram_quantile(
   0.95,
   sum by (le) (
-    rate(http_server_request_duration_seconds_bucket{{
+    increase(http_server_request_duration_seconds_bucket{{
       k8s_namespace_name="{self.args.namespace}",
       kn_service_name="{self.args.kn_service}",
       container_name="{self.args.queue_container}",
@@ -73,16 +78,18 @@ histogram_quantile(
 )
 """.strip()
 
-    def rps_query(self, request_window: str) -> str:
+    def rps_query(self, request_window: str, measurement_seconds: float) -> str:
         return f"""
 sum(
-  rate(http_server_request_duration_seconds_count{{
+  increase(http_server_request_duration_seconds_count{{
     k8s_namespace_name="{self.args.namespace}",
     kn_service_name="{self.args.kn_service}",
     container_name="{self.args.queue_container}",
     http_request_method="POST"
   }}[{request_window}])
 )
+/
+{measurement_seconds}
 """.strip()
 
     def cpu_usage_query(self) -> str:

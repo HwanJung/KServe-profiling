@@ -8,6 +8,7 @@ metadata:
     serving.kserve.io/enable-prometheus-scraping: "true"
 spec:
   predictor:
+    timeout: 120
     minReplicas: 1
     maxReplicas: 1
     containerConcurrency: 0

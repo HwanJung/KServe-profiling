@@ -1,0 +1,850 @@
+[
+  {
+    "phase": "baseline_coarse",
+    "repeat": 1,
+    "config": {
+      "cpu": "1",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 1,
+    "started_at": 1779542137.2345302,
+    "ended_at": 1779542268.4386024,
+    "valid": true,
+    "passed_slo": false,
+    "failure_reasons": [
+      "prometheus p95 0.558125s exceeded SLO 0.500000s"
+    ],
+    "warnings": [],
+    "prom_p95_seconds": 0.5581249999999998,
+    "prom_rps_avg": 2.931595788694457,
+    "prom_rps_max": 2.931595788694457,
+    "hey_p95_seconds": null,
+    "hey_rps": 3.1047,
+    "hey_total_requests": 373,
+    "hey_status_counts": {
+      "200": 373
+    },
+    "cpu_usage_avg": 0.6700628622460094,
+    "cpu_usage_max": 0.7372326016939044,
+    "cpu_throttling_ratio_avg": 0.37661474758605173,
+    "cpu_throttling_ratio_max": 0.4482758620689655,
+    "memory_peak_bytes": 348770304,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-f4b57df4-k5qhs": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-f4b57df4-k5qhs": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.1390 secs\n  Slowest:\t1.2348 secs\n  Fastest:\t0.1012 secs\n  Average:\t0.3220 secs\n  Requests/sec:\t3.1047\n  \n  Total data:\t5827379 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.101 [1]\t|\n  0.215 [98]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.328 [131]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.441 [76]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.555 [40]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.668 [19]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.781 [4]\t|\u25a0\n  0.895 [2]\t|\u25a0\n  1.008 [0]\t|\n  1.121 [0]\t|\n  1.235 [2]\t|\u25a0\n\n\nLatency distribution:\n  10%% in 0.1817 secs\n  25%% in 0.2124 secs\n  50%% in 0.2893 secs\n  75%% in 0.4035 secs\n  90%% in 0.5305 secs\n  95%% in 0.5997 secs\n  99%% in 0.8534 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0018 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0011 secs\n  req write:\t0.0018 secs, 0.0004 secs, 0.0937 secs\n  resp wait:\t0.3197 secs, 0.1000 secs, 1.2339 secs\n  resp read:\t0.0004 secs, 0.0001 secs, 0.0144 secs\n\nStatus code distribution:\n  [200]\t373 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_coarse",
+    "repeat": 1,
+    "config": {
+      "cpu": "2",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 1,
+    "started_at": 1779542522.8209572,
+    "ended_at": 1779542654.734897,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.37946428571428564,
+    "prom_rps_avg": 5.54734033722961,
+    "prom_rps_max": 5.54734033722961,
+    "hey_p95_seconds": null,
+    "hey_rps": 6.0078,
+    "hey_total_requests": 723,
+    "hey_status_counts": {
+      "200": 723
+    },
+    "cpu_usage_avg": 1.0319638120894927,
+    "cpu_usage_max": 1.2467639596917608,
+    "cpu_throttling_ratio_avg": 0.02578417034101442,
+    "cpu_throttling_ratio_max": 0.04744525547445256,
+    "memory_peak_bytes": 295858176,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-c4ff48cc4-tzjdm": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-c4ff48cc4-tzjdm": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.3438 secs\n  Slowest:\t0.5673 secs\n  Fastest:\t0.0658 secs\n  Average:\t0.1664 secs\n  Requests/sec:\t6.0078\n  \n  Total data:\t11295429 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.066 [1]\t|\n  0.116 [267]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.166 [163]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.216 [116]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.266 [82]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.317 [46]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.367 [27]\t|\u25a0\u25a0\u25a0\u25a0\n  0.417 [16]\t|\u25a0\u25a0\n  0.467 [3]\t|\n  0.517 [1]\t|\n  0.567 [1]\t|\n\n\nLatency distribution:\n  10%% in 0.0850 secs\n  25%% in 0.1009 secs\n  50%% in 0.1446 secs\n  75%% in 0.2153 secs\n  90%% in 0.2847 secs\n  95%% in 0.3359 secs\n  99%% in 0.4112 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0025 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0004 secs\n  req write:\t0.0010 secs, 0.0004 secs, 0.0174 secs\n  resp wait:\t0.1651 secs, 0.0650 secs, 0.5662 secs\n  resp read:\t0.0003 secs, 0.0001 secs, 0.0288 secs\n\nStatus code distribution:\n  [200]\t723 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_coarse",
+    "repeat": 1,
+    "config": {
+      "cpu": "2",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 2,
+    "started_at": 1779542736.5286195,
+    "ended_at": 1779542868.4374404,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.4377049180327869,
+    "prom_rps_avg": 8.253995406517125,
+    "prom_rps_max": 8.253995406517125,
+    "hey_p95_seconds": null,
+    "hey_rps": 9.0903,
+    "hey_total_requests": 1091,
+    "hey_status_counts": {
+      "200": 1091
+    },
+    "cpu_usage_avg": 1.4653659152848926,
+    "cpu_usage_max": 1.6097399140083222,
+    "cpu_throttling_ratio_avg": 0.4352933384658726,
+    "cpu_throttling_ratio_max": 0.5861027190332326,
+    "memory_peak_bytes": 300728320,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-c4ff48cc4-tzjdm": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-c4ff48cc4-tzjdm": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.0175 secs\n  Slowest:\t0.7635 secs\n  Fastest:\t0.0868 secs\n  Average:\t0.2200 secs\n  Requests/sec:\t9.0903\n  \n  Total data:\t17044693 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.087 [1]\t|\n  0.154 [224]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.222 [465]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.290 [208]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.357 [101]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.425 [54]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.493 [17]\t|\u25a0\n  0.560 [12]\t|\u25a0\n  0.628 [6]\t|\u25a0\n  0.696 [1]\t|\n  0.764 [2]\t|\n\n\nLatency distribution:\n  10%% in 0.1294 secs\n  25%% in 0.1608 secs\n  50%% in 0.1939 secs\n  75%% in 0.2612 secs\n  90%% in 0.3441 secs\n  95%% in 0.3981 secs\n  99%% in 0.5528 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0203 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0006 secs\n  req write:\t0.0011 secs, 0.0003 secs, 0.0245 secs\n  resp wait:\t0.2185 secs, 0.0858 secs, 0.7626 secs\n  resp read:\t0.0003 secs, 0.0000 secs, 0.0496 secs\n\nStatus code distribution:\n  [200]\t1091 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_boundary_confirmation",
+    "repeat": 1,
+    "config": {
+      "cpu": "2",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 1,
+    "started_at": 1779542946.7341015,
+    "ended_at": 1779543078.92645,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.2566860465116277,
+    "prom_rps_avg": 6.599646859957523,
+    "prom_rps_max": 6.599646859957523,
+    "hey_p95_seconds": null,
+    "hey_rps": 7.2057,
+    "hey_total_requests": 865,
+    "hey_status_counts": {
+      "200": 865
+    },
+    "cpu_usage_avg": 1.1566993519267101,
+    "cpu_usage_max": 1.2301565784994566,
+    "cpu_throttling_ratio_avg": 0.013976905978539901,
+    "cpu_throttling_ratio_max": 0.020356234096692113,
+    "memory_peak_bytes": 304054272,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-c4ff48cc4-tzjdm": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-c4ff48cc4-tzjdm": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.0435 secs\n  Slowest:\t0.4677 secs\n  Fastest:\t0.0697 secs\n  Average:\t0.1388 secs\n  Requests/sec:\t7.2057\n  \n  Total data:\t13513895 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.070 [1]\t|\n  0.109 [385]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.149 [208]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.189 [111]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.229 [73]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.269 [35]\t|\u25a0\u25a0\u25a0\u25a0\n  0.309 [21]\t|\u25a0\u25a0\n  0.348 [16]\t|\u25a0\u25a0\n  0.388 [10]\t|\u25a0\n  0.428 [3]\t|\n  0.468 [2]\t|\n\n\nLatency distribution:\n  10%% in 0.0811 secs\n  25%% in 0.0914 secs\n  50%% in 0.1154 secs\n  75%% in 0.1663 secs\n  90%% in 0.2302 secs\n  95%% in 0.2884 secs\n  99%% in 0.3729 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0008 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0003 secs\n  req write:\t0.0009 secs, 0.0003 secs, 0.0413 secs\n  resp wait:\t0.1376 secs, 0.0689 secs, 0.4668 secs\n  resp read:\t0.0002 secs, 0.0001 secs, 0.0040 secs\n\nStatus code distribution:\n  [200]\t865 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_boundary_confirmation",
+    "repeat": 2,
+    "config": {
+      "cpu": "2",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 1,
+    "started_at": 1779543157.0174632,
+    "ended_at": 1779543289.4079883,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.3381696428571429,
+    "prom_rps_avg": 6.043986569351353,
+    "prom_rps_max": 6.043986569351353,
+    "hey_p95_seconds": null,
+    "hey_rps": 6.5542,
+    "hey_total_requests": 788,
+    "hey_status_counts": {
+      "200": 788
+    },
+    "cpu_usage_avg": 1.0544173467368754,
+    "cpu_usage_max": 1.1674487915731973,
+    "cpu_throttling_ratio_avg": 0.015117868778711572,
+    "cpu_throttling_ratio_max": 0.021327014218009477,
+    "memory_peak_bytes": 301322240,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-c4ff48cc4-tzjdm": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-c4ff48cc4-tzjdm": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.2275 secs\n  Slowest:\t0.8436 secs\n  Fastest:\t0.0691 secs\n  Average:\t0.1526 secs\n  Requests/sec:\t6.5542\n  \n  Total data:\t12310924 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.069 [1]\t|\n  0.147 [495]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.224 [166]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.301 [77]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.379 [28]\t|\u25a0\u25a0\n  0.456 [11]\t|\u25a0\n  0.534 [7]\t|\u25a0\n  0.611 [1]\t|\n  0.689 [1]\t|\n  0.766 [0]\t|\n  0.844 [1]\t|\n\n\nLatency distribution:\n  10%% in 0.0847 secs\n  25%% in 0.0954 secs\n  50%% in 0.1234 secs\n  75%% in 0.1775 secs\n  90%% in 0.2635 secs\n  95%% in 0.3299 secs\n  99%% in 0.4830 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0015 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0009 secs\n  req write:\t0.0010 secs, 0.0004 secs, 0.0291 secs\n  resp wait:\t0.1513 secs, 0.0684 secs, 0.8428 secs\n  resp read:\t0.0003 secs, 0.0001 secs, 0.0093 secs\n\nStatus code distribution:\n  [200]\t788 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_boundary_confirmation",
+    "repeat": 1,
+    "config": {
+      "cpu": "2",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 2,
+    "started_at": 1779543371.31902,
+    "ended_at": 1779543503.4696295,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.4212652439024388,
+    "prom_rps_avg": 8.917486280526235,
+    "prom_rps_max": 8.917486280526235,
+    "hey_p95_seconds": null,
+    "hey_rps": 9.6312,
+    "hey_total_requests": 1156,
+    "hey_status_counts": {
+      "200": 1156
+    },
+    "cpu_usage_avg": 1.467227200386886,
+    "cpu_usage_max": 1.5698420609164283,
+    "cpu_throttling_ratio_avg": 0.47345307579582585,
+    "cpu_throttling_ratio_max": 0.5522875816993464,
+    "memory_peak_bytes": 306937856,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-c4ff48cc4-tzjdm": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-c4ff48cc4-tzjdm": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.0266 secs\n  Slowest:\t0.6604 secs\n  Fastest:\t0.0949 secs\n  Average:\t0.2076 secs\n  Requests/sec:\t9.6312\n  \n  Total data:\t18060188 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.095 [1]\t|\n  0.151 [273]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.208 [475]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.265 [183]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.321 [114]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.378 [51]\t|\u25a0\u25a0\u25a0\u25a0\n  0.434 [30]\t|\u25a0\u25a0\u25a0\n  0.491 [17]\t|\u25a0\n  0.547 [9]\t|\u25a0\n  0.604 [2]\t|\n  0.660 [1]\t|\n\n\nLatency distribution:\n  10%% in 0.1246 secs\n  25%% in 0.1536 secs\n  50%% in 0.1851 secs\n  75%% in 0.2401 secs\n  90%% in 0.3190 secs\n  95%% in 0.3787 secs\n  99%% in 0.4997 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0024 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0014 secs\n  req write:\t0.0010 secs, 0.0004 secs, 0.0332 secs\n  resp wait:\t0.2063 secs, 0.0941 secs, 0.6575 secs\n  resp read:\t0.0002 secs, 0.0000 secs, 0.0114 secs\n\nStatus code distribution:\n  [200]\t1156 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_boundary_confirmation",
+    "repeat": 2,
+    "config": {
+      "cpu": "2",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 2,
+    "started_at": 1779543582.163139,
+    "ended_at": 1779543715.1317196,
+    "valid": true,
+    "passed_slo": false,
+    "failure_reasons": [
+      "prometheus p95 0.572500s exceeded SLO 0.500000s"
+    ],
+    "warnings": [],
+    "prom_p95_seconds": 0.5725,
+    "prom_rps_avg": 6.401620212354412,
+    "prom_rps_max": 6.401620212354412,
+    "hey_p95_seconds": null,
+    "hey_rps": 6.9104,
+    "hey_total_requests": 832,
+    "hey_status_counts": {
+      "200": 832
+    },
+    "cpu_usage_avg": 1.2351787751441574,
+    "cpu_usage_max": 1.4127080689987421,
+    "cpu_throttling_ratio_avg": 0.24226404564828888,
+    "cpu_throttling_ratio_max": 0.40880503144654085,
+    "memory_peak_bytes": 310587392,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-c4ff48cc4-tzjdm": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-c4ff48cc4-tzjdm": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.3983 secs\n  Slowest:\t1.1754 secs\n  Fastest:\t0.0961 secs\n  Average:\t0.2890 secs\n  Requests/sec:\t6.9104\n  \n  Total data:\t12998336 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.096 [1]\t|\n  0.204 [308]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.312 [278]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.420 [103]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.528 [60]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.636 [45]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.744 [18]\t|\u25a0\u25a0\n  0.852 [11]\t|\u25a0\n  0.960 [4]\t|\u25a0\n  1.067 [1]\t|\n  1.175 [3]\t|\n\n\nLatency distribution:\n  10%% in 0.1471 secs\n  25%% in 0.1825 secs\n  50%% in 0.2344 secs\n  75%% in 0.3442 secs\n  90%% in 0.5274 secs\n  95%% in 0.6085 secs\n  99%% in 0.8554 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0016 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0013 secs\n  req write:\t0.0013 secs, 0.0004 secs, 0.0296 secs\n  resp wait:\t0.2873 secs, 0.0947 secs, 1.1741 secs\n  resp read:\t0.0003 secs, 0.0000 secs, 0.0716 secs\n\nStatus code distribution:\n  [200]\t832 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_coarse",
+    "repeat": 1,
+    "config": {
+      "cpu": "4",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 1,
+    "started_at": 1779543961.105647,
+    "ended_at": 1779544091.3712175,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.4137295081967215,
+    "prom_rps_avg": 5.65547387381403,
+    "prom_rps_max": 5.65547387381403,
+    "hey_p95_seconds": null,
+    "hey_rps": 6.008,
+    "hey_total_requests": 721,
+    "hey_status_counts": {
+      "200": 721
+    },
+    "cpu_usage_avg": 1.0489714999753157,
+    "cpu_usage_max": 1.135935714285714,
+    "cpu_throttling_ratio_avg": 0.0,
+    "cpu_throttling_ratio_max": 0.0,
+    "memory_peak_bytes": 289611776,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.0061 secs\n  Slowest:\t0.7222 secs\n  Fastest:\t0.0703 secs\n  Average:\t0.1664 secs\n  Requests/sec:\t6.0080\n  \n  Total data:\t11264183 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.070 [1]\t|\n  0.136 [399]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.201 [146]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.266 [82]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.331 [37]\t|\u25a0\u25a0\u25a0\u25a0\n  0.396 [16]\t|\u25a0\u25a0\n  0.461 [15]\t|\u25a0\u25a0\n  0.527 [8]\t|\u25a0\n  0.592 [5]\t|\u25a0\n  0.657 [6]\t|\u25a0\n  0.722 [6]\t|\u25a0\n\n\nLatency distribution:\n  10%% in 0.0843 secs\n  25%% in 0.0945 secs\n  50%% in 0.1236 secs\n  75%% in 0.1979 secs\n  90%% in 0.2979 secs\n  95%% in 0.4090 secs\n  99%% in 0.6510 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0010 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0006 secs\n  req write:\t0.0011 secs, 0.0004 secs, 0.0538 secs\n  resp wait:\t0.1650 secs, 0.0696 secs, 0.7212 secs\n  resp read:\t0.0003 secs, 0.0001 secs, 0.0096 secs\n\nStatus code distribution:\n  [200]\t721 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_coarse",
+    "repeat": 1,
+    "config": {
+      "cpu": "4",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 2,
+    "started_at": 1779544177.608886,
+    "ended_at": 1779544310.1516707,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.41167168674698795,
+    "prom_rps_avg": 9.9466584062103,
+    "prom_rps_max": 9.9466584062103,
+    "hey_p95_seconds": null,
+    "hey_rps": 10.906,
+    "hey_total_requests": 1311,
+    "hey_status_counts": {
+      "200": 1311
+    },
+    "cpu_usage_avg": 1.6619174018204679,
+    "cpu_usage_max": 1.8014464726245427,
+    "cpu_throttling_ratio_avg": 0.0,
+    "cpu_throttling_ratio_max": 0.0,
+    "memory_peak_bytes": 308891648,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.2089 secs\n  Slowest:\t0.8685 secs\n  Fastest:\t0.0759 secs\n  Average:\t0.1834 secs\n  Requests/sec:\t10.9060\n  \n  Total data:\t20481753 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.076 [1]\t|\n  0.155 [652]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.234 [357]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.314 [179]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.393 [81]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.472 [24]\t|\u25a0\n  0.551 [11]\t|\u25a0\n  0.631 [5]\t|\n  0.710 [0]\t|\n  0.789 [0]\t|\n  0.868 [1]\t|\n\n\nLatency distribution:\n  10%% in 0.0986 secs\n  25%% in 0.1150 secs\n  50%% in 0.1559 secs\n  75%% in 0.2274 secs\n  90%% in 0.3096 secs\n  95%% in 0.3582 secs\n  99%% in 0.4954 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0010 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0004 secs\n  req write:\t0.0011 secs, 0.0004 secs, 0.0277 secs\n  resp wait:\t0.1820 secs, 0.0751 secs, 0.8676 secs\n  resp read:\t0.0002 secs, 0.0001 secs, 0.0233 secs\n\nStatus code distribution:\n  [200]\t1311 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_coarse",
+    "repeat": 1,
+    "config": {
+      "cpu": "4",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 4,
+    "started_at": 1779544391.9560473,
+    "ended_at": 1779544524.4463096,
+    "valid": true,
+    "passed_slo": false,
+    "failure_reasons": [
+      "prometheus p95 0.846011s exceeded SLO 0.500000s"
+    ],
+    "warnings": [],
+    "prom_p95_seconds": 0.8460106382978722,
+    "prom_rps_avg": 8.486274484894661,
+    "prom_rps_max": 8.486274484894661,
+    "hey_p95_seconds": null,
+    "hey_rps": 9.078,
+    "hey_total_requests": 1095,
+    "hey_status_counts": {
+      "200": 1095
+    },
+    "cpu_usage_avg": 1.6180278031172328,
+    "cpu_usage_max": 1.9087209812877584,
+    "cpu_throttling_ratio_avg": 0.007881208568733887,
+    "cpu_throttling_ratio_max": 0.01856763925729443,
+    "memory_peak_bytes": 328769536,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.6210 secs\n  Slowest:\t1.6584 secs\n  Fastest:\t0.1126 secs\n  Average:\t0.4404 secs\n  Requests/sec:\t9.0780\n  \n  Total data:\t17107185 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.113 [1]\t|\n  0.267 [301]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.422 [363]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.576 [208]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.731 [86]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.885 [51]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  1.040 [34]\t|\u25a0\u25a0\u25a0\u25a0\n  1.195 [15]\t|\u25a0\u25a0\n  1.349 [23]\t|\u25a0\u25a0\u25a0\n  1.504 [8]\t|\u25a0\n  1.658 [5]\t|\u25a0\n\n\nLatency distribution:\n  10%% in 0.1936 secs\n  25%% in 0.2572 secs\n  50%% in 0.3677 secs\n  75%% in 0.5325 secs\n  90%% in 0.7963 secs\n  95%% in 1.0208 secs\n  99%% in 1.3979 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0067 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0014 secs\n  req write:\t0.0015 secs, 0.0004 secs, 0.0452 secs\n  resp wait:\t0.4382 secs, 0.1111 secs, 1.6468 secs\n  resp read:\t0.0005 secs, 0.0000 secs, 0.0783 secs\n\nStatus code distribution:\n  [200]\t1095 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_linear_refinement",
+    "repeat": 1,
+    "config": {
+      "cpu": "4",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 3,
+    "started_at": 1779544614.1638796,
+    "ended_at": 1779544739.7946734,
+    "valid": true,
+    "passed_slo": false,
+    "failure_reasons": [
+      "prometheus p95 0.814881s exceeded SLO 0.500000s"
+    ],
+    "warnings": [],
+    "prom_p95_seconds": 0.8148809523809522,
+    "prom_rps_avg": 7.339434995966912,
+    "prom_rps_max": 7.339434995966912,
+    "hey_p95_seconds": null,
+    "hey_rps": 7.3503,
+    "hey_total_requests": 888,
+    "hey_status_counts": {
+      "200": 888
+    },
+    "cpu_usage_avg": 1.5865488625407271,
+    "cpu_usage_max": 1.8726252909579242,
+    "cpu_throttling_ratio_avg": 0.004782195850736104,
+    "cpu_throttling_ratio_max": 0.00782778864970646,
+    "memory_peak_bytes": 335613952,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.8107 secs\n  Slowest:\t1.7201 secs\n  Fastest:\t0.0995 secs\n  Average:\t0.4066 secs\n  Requests/sec:\t7.3503\n  \n  Total data:\t13873224 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.099 [1]\t|\n  0.262 [350]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.424 [218]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.586 [129]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.748 [78]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.910 [53]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  1.072 [39]\t|\u25a0\u25a0\u25a0\u25a0\n  1.234 [8]\t|\u25a0\n  1.396 [6]\t|\u25a0\n  1.558 [2]\t|\n  1.720 [4]\t|\n\n\nLatency distribution:\n  10%% in 0.1550 secs\n  25%% in 0.1979 secs\n  50%% in 0.3073 secs\n  75%% in 0.5391 secs\n  90%% in 0.8279 secs\n  95%% in 0.9551 secs\n  99%% in 1.3183 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0174 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0089 secs\n  req write:\t0.0016 secs, 0.0004 secs, 0.0651 secs\n  resp wait:\t0.4044 secs, 0.0986 secs, 1.7193 secs\n  resp read:\t0.0005 secs, 0.0000 secs, 0.1084 secs\n\nStatus code distribution:\n  [200]\t888 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_linear_refinement",
+    "repeat": 2,
+    "config": {
+      "cpu": "4",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 3,
+    "started_at": 1779544816.3617427,
+    "ended_at": 1779544939.732494,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.48047091412742393,
+    "prom_rps_avg": 11.278559731140662,
+    "prom_rps_max": 11.278559731140662,
+    "hey_p95_seconds": null,
+    "hey_rps": 11.3958,
+    "hey_total_requests": 1369,
+    "hey_status_counts": {
+      "200": 1369
+    },
+    "cpu_usage_avg": 1.7727712871021064,
+    "cpu_usage_max": 2.080775140698361,
+    "cpu_throttling_ratio_avg": 0.0024469179228687942,
+    "cpu_throttling_ratio_max": 0.004106776180698152,
+    "memory_peak_bytes": 331055104,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.1318 secs\n  Slowest:\t1.0068 secs\n  Fastest:\t0.0991 secs\n  Average:\t0.2631 secs\n  Requests/sec:\t11.3958\n  \n  Total data:\t21387887 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.099 [1]\t|\n  0.190 [525]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.281 [389]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.371 [203]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.462 [111]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.553 [82]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.644 [34]\t|\u25a0\u25a0\u25a0\n  0.734 [13]\t|\u25a0\n  0.825 [7]\t|\u25a0\n  0.916 [3]\t|\n  1.007 [1]\t|\n\n\nLatency distribution:\n  10%% in 0.1365 secs\n  25%% in 0.1639 secs\n  50%% in 0.2189 secs\n  75%% in 0.3304 secs\n  90%% in 0.4640 secs\n  95%% in 0.5330 secs\n  99%% in 0.7231 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0019 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0005 secs\n  req write:\t0.0011 secs, 0.0004 secs, 0.0191 secs\n  resp wait:\t0.2616 secs, 0.0983 secs, 1.0054 secs\n  resp read:\t0.0003 secs, 0.0000 secs, 0.0616 secs\n\nStatus code distribution:\n  [200]\t1369 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_boundary_confirmation",
+    "repeat": 1,
+    "config": {
+      "cpu": "4",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 2,
+    "started_at": 1779545013.7119179,
+    "ended_at": 1779545137.1735187,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.44304846938775516,
+    "prom_rps_avg": 9.759049628270926,
+    "prom_rps_max": 9.759049628270926,
+    "hey_p95_seconds": null,
+    "hey_rps": 9.9592,
+    "hey_total_requests": 1198,
+    "hey_status_counts": {
+      "200": 1198
+    },
+    "cpu_usage_avg": 1.575360291918936,
+    "cpu_usage_max": 1.6576333115691402,
+    "cpu_throttling_ratio_avg": 0.0,
+    "cpu_throttling_ratio_max": 0.0,
+    "memory_peak_bytes": 333283328,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.2910 secs\n  Slowest:\t0.8470 secs\n  Fastest:\t0.0809 secs\n  Average:\t0.2007 secs\n  Requests/sec:\t9.9592\n  \n  Total data:\t18716354 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.081 [1]\t|\n  0.158 [572]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.234 [311]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.311 [138]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.387 [82]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.464 [47]\t|\u25a0\u25a0\u25a0\n  0.541 [27]\t|\u25a0\u25a0\n  0.617 [13]\t|\u25a0\n  0.694 [4]\t|\n  0.770 [2]\t|\n  0.847 [1]\t|\n\n\nLatency distribution:\n  10%% in 0.1062 secs\n  25%% in 0.1233 secs\n  50%% in 0.1637 secs\n  75%% in 0.2395 secs\n  90%% in 0.3505 secs\n  95%% in 0.4322 secs\n  99%% in 0.5947 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0086 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0011 secs\n  req write:\t0.0011 secs, 0.0004 secs, 0.0238 secs\n  resp wait:\t0.1992 secs, 0.0801 secs, 0.8458 secs\n  resp read:\t0.0003 secs, 0.0001 secs, 0.0321 secs\n\nStatus code distribution:\n  [200]\t1198 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_boundary_confirmation",
+    "repeat": 2,
+    "config": {
+      "cpu": "4",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 2,
+    "started_at": 1779545211.328315,
+    "ended_at": 1779545332.5593593,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.41366279069767403,
+    "prom_rps_avg": 10.395491244889362,
+    "prom_rps_max": 10.395491244889362,
+    "hey_p95_seconds": null,
+    "hey_rps": 10.1759,
+    "hey_total_requests": 1222,
+    "hey_status_counts": {
+      "200": 1222
+    },
+    "cpu_usage_avg": 1.6307603859724915,
+    "cpu_usage_max": 1.6927973155870022,
+    "cpu_throttling_ratio_avg": 0.0,
+    "cpu_throttling_ratio_max": 0.0,
+    "memory_peak_bytes": 335085568,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.0879 secs\n  Slowest:\t0.8176 secs\n  Fastest:\t0.0802 secs\n  Average:\t0.1965 secs\n  Requests/sec:\t10.1759\n  \n  Total data:\t19091306 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.080 [1]\t|\n  0.154 [499]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.228 [371]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.301 [197]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.375 [90]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.449 [41]\t|\u25a0\u25a0\u25a0\n  0.523 [17]\t|\u25a0\n  0.596 [2]\t|\n  0.670 [3]\t|\n  0.744 [0]\t|\n  0.818 [1]\t|\n\n\nLatency distribution:\n  10%% in 0.1090 secs\n  25%% in 0.1264 secs\n  50%% in 0.1748 secs\n  75%% in 0.2432 secs\n  90%% in 0.3213 secs\n  95%% in 0.3788 secs\n  99%% in 0.5053 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0014 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0005 secs\n  req write:\t0.0011 secs, 0.0004 secs, 0.0554 secs\n  resp wait:\t0.1951 secs, 0.0794 secs, 0.7620 secs\n  resp read:\t0.0002 secs, 0.0000 secs, 0.0159 secs\n\nStatus code distribution:\n  [200]\t1222 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_boundary_confirmation",
+    "repeat": 1,
+    "config": {
+      "cpu": "4",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 3,
+    "started_at": 1779545405.6300693,
+    "ended_at": 1779545526.3986418,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.4779999999999999,
+    "prom_rps_avg": 11.523949528936537,
+    "prom_rps_max": 11.523949528936537,
+    "hey_p95_seconds": null,
+    "hey_rps": 11.4565,
+    "hey_total_requests": 1376,
+    "hey_status_counts": {
+      "200": 1376
+    },
+    "cpu_usage_avg": 1.8659631622553055,
+    "cpu_usage_max": 1.9975084079649357,
+    "cpu_throttling_ratio_avg": 0.0018980870409092503,
+    "cpu_throttling_ratio_max": 0.0026041666666666665,
+    "memory_peak_bytes": 332795904,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.1069 secs\n  Slowest:\t1.0406 secs\n  Fastest:\t0.0913 secs\n  Average:\t0.2618 secs\n  Requests/sec:\t11.4565\n  \n  Total data:\t21497248 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.091 [1]\t|\n  0.186 [491]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.281 [407]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.376 [244]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.471 [131]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.566 [59]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.661 [20]\t|\u25a0\u25a0\n  0.756 [11]\t|\u25a0\n  0.851 [7]\t|\u25a0\n  0.946 [3]\t|\n  1.041 [2]\t|\n\n\nLatency distribution:\n  10%% in 0.1372 secs\n  25%% in 0.1624 secs\n  50%% in 0.2211 secs\n  75%% in 0.3282 secs\n  90%% in 0.4406 secs\n  95%% in 0.5078 secs\n  99%% in 0.7352 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0146 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0006 secs\n  req write:\t0.0011 secs, 0.0004 secs, 0.0276 secs\n  resp wait:\t0.2603 secs, 0.0898 secs, 1.0397 secs\n  resp read:\t0.0003 secs, 0.0000 secs, 0.0236 secs\n\nStatus code distribution:\n  [200]\t1376 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "baseline_boundary_confirmation",
+    "repeat": 2,
+    "config": {
+      "cpu": "4",
+      "memory": "4Gi",
+      "container_concurrency": 0
+    },
+    "client_concurrency": 3,
+    "started_at": 1779545599.7685745,
+    "ended_at": 1779545720.1364467,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.47146666666666665,
+    "prom_rps_avg": 11.93191610522731,
+    "prom_rps_max": 11.93191610522731,
+    "hey_p95_seconds": null,
+    "hey_rps": 11.459,
+    "hey_total_requests": 1378,
+    "hey_status_counts": {
+      "200": 1378
+    },
+    "cpu_usage_avg": 1.8876423895473786,
+    "cpu_usage_max": 2.010520615809719,
+    "cpu_throttling_ratio_avg": 0.0025805482502537203,
+    "cpu_throttling_ratio_max": 0.004830917874396136,
+    "memory_peak_bytes": 331214848,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-7d4568ff5-f2hhp": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.2544 secs\n  Slowest:\t0.8005 secs\n  Fastest:\t0.1031 secs\n  Average:\t0.2616 secs\n  Requests/sec:\t11.4590\n  \n  Total data:\t21528494 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.103 [1]\t|\n  0.173 [316]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.243 [427]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.312 [274]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.382 [159]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.452 [98]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.522 [57]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.591 [22]\t|\u25a0\u25a0\n  0.661 [10]\t|\u25a0\n  0.731 [11]\t|\u25a0\n  0.801 [3]\t|\n\n\nLatency distribution:\n  10%% in 0.1449 secs\n  25%% in 0.1771 secs\n  50%% in 0.2319 secs\n  75%% in 0.3164 secs\n  90%% in 0.4191 secs\n  95%% in 0.4819 secs\n  99%% in 0.6774 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0050 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0008 secs\n  req write:\t0.0012 secs, 0.0004 secs, 0.0334 secs\n  resp wait:\t0.2601 secs, 0.1021 secs, 0.7995 secs\n  resp read:\t0.0002 secs, 0.0000 secs, 0.0154 secs\n\nStatus code distribution:\n  [200]\t1378 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "validation",
+    "repeat": 1,
+    "config": {
+      "cpu": "2",
+      "memory": "4Gi",
+      "container_concurrency": 1
+    },
+    "client_concurrency": 1,
+    "started_at": 1779545950.7591004,
+    "ended_at": 1779546070.9223762,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.26676829268292673,
+    "prom_rps_avg": 6.646086141197433,
+    "prom_rps_max": 6.646086141197433,
+    "hey_p95_seconds": null,
+    "hey_rps": 6.5952,
+    "hey_total_requests": 792,
+    "hey_status_counts": {
+      "200": 792
+    },
+    "cpu_usage_avg": 1.1506241184410329,
+    "cpu_usage_max": 1.2119548926553674,
+    "cpu_throttling_ratio_avg": 0.0014425310911609845,
+    "cpu_throttling_ratio_max": 0.003125,
+    "memory_peak_bytes": 295981056,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-5c8965758c-gpprs": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-5c8965758c-gpprs": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.0872 secs\n  Slowest:\t0.5610 secs\n  Fastest:\t0.0754 secs\n  Average:\t0.1516 secs\n  Requests/sec:\t6.5952\n  \n  Total data:\t12373416 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.075 [1]\t|\n  0.124 [369]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.173 [191]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.221 [113]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.270 [65]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.318 [24]\t|\u25a0\u25a0\u25a0\n  0.367 [18]\t|\u25a0\u25a0\n  0.415 [6]\t|\u25a0\n  0.464 [2]\t|\n  0.512 [2]\t|\n  0.561 [1]\t|\n\n\nLatency distribution:\n  10%% in 0.0905 secs\n  25%% in 0.1025 secs\n  50%% in 0.1269 secs\n  75%% in 0.1835 secs\n  90%% in 0.2418 secs\n  95%% in 0.2895 secs\n  99%% in 0.4027 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0039 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0010 secs\n  req write:\t0.0010 secs, 0.0004 secs, 0.0254 secs\n  resp wait:\t0.1502 secs, 0.0748 secs, 0.5550 secs\n  resp read:\t0.0002 secs, 0.0001 secs, 0.0118 secs\n\nStatus code distribution:\n  [200]\t792 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "validation",
+    "repeat": 2,
+    "config": {
+      "cpu": "2",
+      "memory": "4Gi",
+      "container_concurrency": 1
+    },
+    "client_concurrency": 1,
+    "started_at": 1779546144.7541227,
+    "ended_at": 1779546264.85726,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.2491481069042316,
+    "prom_rps_avg": 7.050553066387824,
+    "prom_rps_max": 7.050553066387824,
+    "hey_p95_seconds": null,
+    "hey_rps": 6.7563,
+    "hey_total_requests": 811,
+    "hey_status_counts": {
+      "200": 811
+    },
+    "cpu_usage_avg": 1.11845488954645,
+    "cpu_usage_max": 1.2177306332299285,
+    "cpu_throttling_ratio_avg": 0.0,
+    "cpu_throttling_ratio_max": 0.0,
+    "memory_peak_bytes": 296497152,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-5c8965758c-gpprs": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-5c8965758c-gpprs": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.0366 secs\n  Slowest:\t0.6365 secs\n  Fastest:\t0.0755 secs\n  Average:\t0.1480 secs\n  Requests/sec:\t6.7563\n  \n  Total data:\t12670253 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.076 [1]\t|\n  0.132 [445]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.188 [197]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.244 [84]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.300 [51]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.356 [20]\t|\u25a0\u25a0\n  0.412 [10]\t|\u25a0\n  0.468 [2]\t|\n  0.524 [0]\t|\n  0.580 [0]\t|\n  0.637 [1]\t|\n\n\nLatency distribution:\n  10%% in 0.0892 secs\n  25%% in 0.1004 secs\n  50%% in 0.1247 secs\n  75%% in 0.1732 secs\n  90%% in 0.2494 secs\n  95%% in 0.2872 secs\n  99%% in 0.3832 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0072 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0005 secs\n  req write:\t0.0009 secs, 0.0004 secs, 0.0149 secs\n  resp wait:\t0.1467 secs, 0.0746 secs, 0.6354 secs\n  resp read:\t0.0003 secs, 0.0001 secs, 0.0201 secs\n\nStatus code distribution:\n  [200]\t811 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "validation",
+    "repeat": 1,
+    "config": {
+      "cpu": "4",
+      "memory": "4Gi",
+      "container_concurrency": 2
+    },
+    "client_concurrency": 2,
+    "started_at": 1779546499.9364538,
+    "ended_at": 1779546620.3188357,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.4325694444444444,
+    "prom_rps_avg": 9.810295412623082,
+    "prom_rps_max": 9.810295412623082,
+    "hey_p95_seconds": null,
+    "hey_rps": 9.6918,
+    "hey_total_requests": 1166,
+    "hey_status_counts": {
+      "200": 1166
+    },
+    "cpu_usage_avg": 1.5962002457474302,
+    "cpu_usage_max": 1.7539448209488757,
+    "cpu_throttling_ratio_avg": 0.0,
+    "cpu_throttling_ratio_max": 0.0,
+    "memory_peak_bytes": 285433856,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-58f7b865ff-vmh7d": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-58f7b865ff-vmh7d": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.3080 secs\n  Slowest:\t0.8711 secs\n  Fastest:\t0.0872 secs\n  Average:\t0.2061 secs\n  Requests/sec:\t9.6918\n  \n  Total data:\t18216418 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.087 [1]\t|\n  0.166 [514]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.244 [357]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.322 [161]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.401 [69]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.479 [35]\t|\u25a0\u25a0\u25a0\n  0.558 [15]\t|\u25a0\n  0.636 [6]\t|\n  0.714 [5]\t|\n  0.793 [2]\t|\n  0.871 [1]\t|\n\n\nLatency distribution:\n  10%% in 0.1150 secs\n  25%% in 0.1359 secs\n  50%% in 0.1744 secs\n  75%% in 0.2464 secs\n  90%% in 0.3350 secs\n  95%% in 0.4039 secs\n  99%% in 0.5906 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0011 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0007 secs\n  req write:\t0.0011 secs, 0.0005 secs, 0.0311 secs\n  resp wait:\t0.2047 secs, 0.0862 secs, 0.8702 secs\n  resp read:\t0.0003 secs, 0.0001 secs, 0.0245 secs\n\nStatus code distribution:\n  [200]\t1166 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "validation",
+    "repeat": 2,
+    "config": {
+      "cpu": "4",
+      "memory": "4Gi",
+      "container_concurrency": 2
+    },
+    "client_concurrency": 2,
+    "started_at": 1779546693.4435422,
+    "ended_at": 1779546813.6292968,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.47601809954751123,
+    "prom_rps_avg": 8.410881738940958,
+    "prom_rps_max": 8.410881738940958,
+    "hey_p95_seconds": null,
+    "hey_rps": 8.3574,
+    "hey_total_requests": 1004,
+    "hey_status_counts": {
+      "200": 1004
+    },
+    "cpu_usage_avg": 1.5009436237853726,
+    "cpu_usage_max": 1.653178077999013,
+    "cpu_throttling_ratio_avg": 0.0,
+    "cpu_throttling_ratio_max": 0.0,
+    "memory_peak_bytes": 292958208,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-58f7b865ff-vmh7d": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-58f7b865ff-vmh7d": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.1324 secs\n  Slowest:\t0.8588 secs\n  Fastest:\t0.0910 secs\n  Average:\t0.2392 secs\n  Requests/sec:\t8.3574\n  \n  Total data:\t15685492 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.091 [1]\t|\n  0.168 [381]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.245 [265]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.321 [156]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.398 [82]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.475 [52]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.552 [29]\t|\u25a0\u25a0\u25a0\n  0.628 [16]\t|\u25a0\u25a0\n  0.705 [10]\t|\u25a0\n  0.782 [9]\t|\u25a0\n  0.859 [3]\t|\n\n\nLatency distribution:\n  10%% in 0.1197 secs\n  25%% in 0.1433 secs\n  50%% in 0.2000 secs\n  75%% in 0.2908 secs\n  90%% in 0.4293 secs\n  95%% in 0.5119 secs\n  99%% in 0.7089 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0041 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0019 secs\n  req write:\t0.0012 secs, 0.0004 secs, 0.0377 secs\n  resp wait:\t0.2376 secs, 0.0899 secs, 0.8549 secs\n  resp read:\t0.0003 secs, 0.0001 secs, 0.0152 secs\n\nStatus code distribution:\n  [200]\t1004 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  {
+    "phase": "memory_revalidation",
+    "repeat": 1,
+    "config": {
+      "cpu": "2",
+      "memory": "1Gi",
+      "container_concurrency": 1
+    },
+    "client_concurrency": 1,
+    "started_at": 1779547039.1220775,
+    "ended_at": 1779547159.2828305,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.315051020408163,
+    "prom_rps_avg": 6.6464717191656435,
+    "prom_rps_max": 6.6464717191656435,
+    "hey_p95_seconds": null,
+    "hey_rps": 6.5123,
+    "hey_total_requests": 782,
+    "hey_status_counts": {
+      "200": 782
+    },
+    "cpu_usage_avg": 1.1097738752819768,
+    "cpu_usage_max": 1.1570414601018677,
+    "cpu_throttling_ratio_avg": 0.0,
+    "cpu_throttling_ratio_max": 0.0,
+    "memory_peak_bytes": 327938048,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-84b74c5f68-frg2b": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-84b74c5f68-frg2b": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.0801 secs\n  Slowest:\t0.7292 secs\n  Fastest:\t0.0729 secs\n  Average:\t0.1535 secs\n  Requests/sec:\t6.5123\n  \n  Total data:\t12217186 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.073 [1]\t|\n  0.138 [427]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.204 [206]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.270 [89]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.335 [42]\t|\u25a0\u25a0\u25a0\u25a0\n  0.401 [10]\t|\u25a0\n  0.467 [3]\t|\n  0.532 [2]\t|\n  0.598 [0]\t|\n  0.664 [1]\t|\n  0.729 [1]\t|\n\n\nLatency distribution:\n  10%% in 0.0878 secs\n  25%% in 0.1012 secs\n  50%% in 0.1298 secs\n  75%% in 0.1870 secs\n  90%% in 0.2510 secs\n  95%% in 0.3039 secs\n  99%% in 0.4129 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0163 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0130 secs\n  req write:\t0.0010 secs, 0.0005 secs, 0.0414 secs\n  resp wait:\t0.1521 secs, 0.0720 secs, 0.7270 secs\n  resp read:\t0.0003 secs, 0.0001 secs, 0.0457 secs\n\nStatus code distribution:\n  [200]\t782 responses\n\n\n\n",
+    "hey_stderr": ""
+  }
+]

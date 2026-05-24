@@ -27,24 +27,24 @@ def summarize_config(
     valid_runs = [item for item in matching_runs if item.valid]
     passed_runs = [item for item in valid_runs if item.passed_slo]
     prom_p95_values = [
-        item.prom_p95_seconds for item in passed_runs if item.prom_p95_seconds is not None
+        item.prom_p95_seconds for item in valid_runs if item.prom_p95_seconds is not None
     ]
-    prom_rps_values = [item.prom_rps_avg for item in passed_runs if item.prom_rps_avg is not None]
-    hey_rps_values = [item.hey_rps for item in passed_runs if item.hey_rps is not None]
-    cpu_avg_values = [item.cpu_usage_avg for item in passed_runs if item.cpu_usage_avg is not None]
-    cpu_max_values = [item.cpu_usage_max for item in passed_runs if item.cpu_usage_max is not None]
+    prom_rps_values = [item.prom_rps_avg for item in valid_runs if item.prom_rps_avg is not None]
+    hey_rps_values = [item.hey_rps for item in valid_runs if item.hey_rps is not None]
+    cpu_avg_values = [item.cpu_usage_avg for item in valid_runs if item.cpu_usage_avg is not None]
+    cpu_max_values = [item.cpu_usage_max for item in valid_runs if item.cpu_usage_max is not None]
     throttle_avg_values = [
         item.cpu_throttling_ratio_avg
-        for item in passed_runs
+        for item in valid_runs
         if item.cpu_throttling_ratio_avg is not None
     ]
     throttle_max_values = [
         item.cpu_throttling_ratio_max
-        for item in passed_runs
+        for item in valid_runs
         if item.cpu_throttling_ratio_max is not None
     ]
     memory_peaks = [
-        int(item.memory_peak_bytes) for item in passed_runs if item.memory_peak_bytes is not None
+        int(item.memory_peak_bytes) for item in valid_runs if item.memory_peak_bytes is not None
     ]
     failure_reasons = sorted({reason for item in matching_runs for reason in item.failure_reasons})
     warnings = sorted({warning for item in matching_runs for warning in item.warnings})
@@ -69,9 +69,7 @@ def summarize_config(
         and prom_p95_worst <= args.slo_p95_seconds
     )
     cpu_stability_failures = cpu_stability_failure_reasons(
-        config=config,
         args=args,
-        cpu_usage_avg=cpu_usage_avg,
         cpu_throttling_ratio_avg=cpu_throttling_ratio_avg,
         cpu_throttling_ratio_max=cpu_throttling_ratio_max,
     )
@@ -124,9 +122,7 @@ def pick_recommendation(summaries: list[CandidateSummary]) -> CandidateSummary |
 
 
 def cpu_stability_failure_reasons(
-    config: ProfileConfig,
     args: argparse.Namespace,
-    cpu_usage_avg: float | None,
     cpu_throttling_ratio_avg: float | None,
     cpu_throttling_ratio_max: float | None,
 ) -> list[str]:
@@ -148,17 +144,6 @@ def cpu_stability_failure_reasons(
             f"{cpu_throttling_ratio_max:.3f} exceeded limit "
             f"{args.max_cpu_throttling_max:.3f}"
         )
-
-    if cpu_usage_avg is None:
-        reasons.append("average CPU usage unavailable")
-    else:
-        utilization_ratio = cpu_usage_avg / config.cpu_float
-        if utilization_ratio > args.max_cpu_utilization_ratio_avg:
-            reasons.append(
-                "average CPU utilization ratio "
-                f"{utilization_ratio:.3f} exceeded limit "
-                f"{args.max_cpu_utilization_ratio_avg:.3f}"
-            )
 
     return reasons
 

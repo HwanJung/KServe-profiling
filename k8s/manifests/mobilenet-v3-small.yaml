@@ -1,0 +1,26 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: mobilenet-v3-small
+  namespace: kserve-test
+  annotations:
+    serving.kserve.io/enable-metric-aggregation: "true"
+    serving.kserve.io/enable-prometheus-scraping: "true"
+spec:
+  predictor:
+    timeout: 120
+    minReplicas: 1
+    maxReplicas: 1
+    containerConcurrency: 0
+    model:
+      modelFormat:
+        name: tensorflow
+      runtime: kserve-tensorflow-serving
+      storageUri: "pvc://resnet-pvc/mobilenet-v3-small/"
+      resources:
+        requests:
+          cpu: "1"
+          memory: "1Gi"
+        limits:
+          cpu: "1"
+          memory: "2Gi"

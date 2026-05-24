@@ -1,0 +1,287 @@
+{
+  "metadata": {
+    "created_at": 1779547181.1832206,
+    "target_url": "http://localhost:8080/v1/models/mobilenet-v3-large:predict",
+    "model_name": "mobilenet-v3-large",
+    "host_header": "mobilenet-v3-large.kserve-test.example.com",
+    "prometheus_url": "http://localhost:9090",
+    "namespace": "kserve-test",
+    "inference_service": "mobilenet-v3-large",
+    "kn_service": "mobilenet-v3-large-predictor",
+    "queue_container": "queue-proxy",
+    "model_container": "kserve-container",
+    "observability_namespace": "knative-serving",
+    "observability_configmap": "config-observability",
+    "cpu_candidates": [
+      "1",
+      "2",
+      "4"
+    ],
+    "fixed_memory": "4Gi",
+    "memory_headroom_factor": 1.3,
+    "request_aggregation_window": "measurement_duration_plus_scrape_lag",
+    "cpu_rate_window": "1m",
+    "slo_p95_seconds": 0.5,
+    "rps_diff_warn_ratio": 0.15,
+    "max_cpu_throttling_avg": 0.1,
+    "max_cpu_throttling_max": 0.1,
+    "min_marginal_rps_efficiency": 0.7,
+    "refinement_linear_threshold": 8
+  },
+  "baseline_stable_by_cpu": {
+    "2": 1,
+    "4": 2
+  },
+  "baseline_bounds_by_cpu": {
+    "2": {
+      "last_good_c": 1,
+      "bad_c": 2,
+      "stable_c": 1,
+      "refinement_method": "linear",
+      "reason": "slo_failure",
+      "bad_marginal_rps_efficiency": null
+    },
+    "4": {
+      "last_good_c": 2,
+      "bad_c": 3,
+      "stable_c": 2,
+      "refinement_method": "linear",
+      "reason": "marginal_rps_efficiency",
+      "bad_marginal_rps_efficiency": 0.32760108818950306
+    }
+  },
+  "excluded_cpu_baselines": {
+    "1": "no client concurrency passed SLO"
+  },
+  "recommendation": {
+    "config": {
+      "cpu": "2",
+      "memory": "4Gi",
+      "container_concurrency": 1
+    },
+    "client_concurrency": 1,
+    "run_count": 2,
+    "valid_run_count": 2,
+    "passed_run_count": 2,
+    "passed_slo": true,
+    "recommendable": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_worst": 0.26676829268292673,
+    "prom_rps_avg": 6.848319603792628,
+    "hey_rps_avg": 6.675750000000001,
+    "rps_diff_ratio": 0.025850219644628337,
+    "score_rps_per_cpu": 3.424159801896314,
+    "cpu_usage_avg": 1.1345395039937414,
+    "cpu_usage_max": 1.2177306332299285,
+    "cpu_throttling_ratio_avg": 0.0007212655455804923,
+    "cpu_throttling_ratio_max": 0.003125,
+    "memory_peak_bytes_by_run": [
+      295981056,
+      296497152
+    ],
+    "max_memory_peak_bytes": 296497152,
+    "recommended_memory": "1Gi"
+  },
+  "memory_revalidation": {
+    "phase": "memory_revalidation",
+    "repeat": 1,
+    "config": {
+      "cpu": "2",
+      "memory": "1Gi",
+      "container_concurrency": 1
+    },
+    "client_concurrency": 1,
+    "started_at": 1779547039.1220775,
+    "ended_at": 1779547159.2828305,
+    "valid": true,
+    "passed_slo": true,
+    "failure_reasons": [],
+    "warnings": [],
+    "prom_p95_seconds": 0.315051020408163,
+    "prom_rps_avg": 6.6464717191656435,
+    "prom_rps_max": 6.6464717191656435,
+    "hey_p95_seconds": null,
+    "hey_rps": 6.5123,
+    "hey_total_requests": 782,
+    "hey_status_counts": {
+      "200": 782
+    },
+    "cpu_usage_avg": 1.1097738752819768,
+    "cpu_usage_max": 1.1570414601018677,
+    "cpu_throttling_ratio_avg": 0.0,
+    "cpu_throttling_ratio_max": 0.0,
+    "memory_peak_bytes": 327938048,
+    "pod_restarts_before": {
+      "mobilenet-v3-large-predictor-00001-deployment-84b74c5f68-frg2b": 0
+    },
+    "pod_restarts_after": {
+      "mobilenet-v3-large-predictor-00001-deployment-84b74c5f68-frg2b": 0
+    },
+    "oom_killed_pods": [],
+    "hey_returncode": 0,
+    "hey_stdout": "\nSummary:\n  Total:\t120.0801 secs\n  Slowest:\t0.7292 secs\n  Fastest:\t0.0729 secs\n  Average:\t0.1535 secs\n  Requests/sec:\t6.5123\n  \n  Total data:\t12217186 bytes\n  Size/request:\t15623 bytes\n\nResponse time histogram:\n  0.073 [1]\t|\n  0.138 [427]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.204 [206]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.270 [89]\t|\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\u25a0\n  0.335 [42]\t|\u25a0\u25a0\u25a0\u25a0\n  0.401 [10]\t|\u25a0\n  0.467 [3]\t|\n  0.532 [2]\t|\n  0.598 [0]\t|\n  0.664 [1]\t|\n  0.729 [1]\t|\n\n\nLatency distribution:\n  10%% in 0.0878 secs\n  25%% in 0.1012 secs\n  50%% in 0.1298 secs\n  75%% in 0.1870 secs\n  90%% in 0.2510 secs\n  95%% in 0.3039 secs\n  99%% in 0.4129 secs\n\nDetails (average, fastest, slowest):\n  DNS+dialup:\t0.0000 secs, 0.0000 secs, 0.0163 secs\n  DNS-lookup:\t0.0000 secs, 0.0000 secs, 0.0130 secs\n  req write:\t0.0010 secs, 0.0005 secs, 0.0414 secs\n  resp wait:\t0.1521 secs, 0.0720 secs, 0.7270 secs\n  resp read:\t0.0003 secs, 0.0001 secs, 0.0457 secs\n\nStatus code distribution:\n  [200]\t782 responses\n\n\n\n",
+    "hey_stderr": ""
+  },
+  "baseline_summaries": [
+    {
+      "config": {
+        "cpu": "1",
+        "memory": "4Gi",
+        "container_concurrency": 0
+      },
+      "client_concurrency": 1,
+      "run_count": 1,
+      "valid_run_count": 1,
+      "passed_run_count": 0,
+      "passed_slo": false,
+      "recommendable": false,
+      "failure_reasons": [
+        "average CPU throttling ratio 0.377 exceeded limit 0.100",
+        "max CPU throttling ratio 0.448 exceeded limit 0.100",
+        "prometheus p95 0.558125s exceeded SLO 0.500000s"
+      ],
+      "warnings": [],
+      "prom_p95_worst": 0.5581249999999998,
+      "prom_rps_avg": 2.931595788694457,
+      "hey_rps_avg": 3.1047,
+      "rps_diff_ratio": 0.05575553557688111,
+      "score_rps_per_cpu": null,
+      "cpu_usage_avg": 0.6700628622460094,
+      "cpu_usage_max": 0.7372326016939044,
+      "cpu_throttling_ratio_avg": 0.37661474758605173,
+      "cpu_throttling_ratio_max": 0.4482758620689655,
+      "memory_peak_bytes_by_run": [
+        348770304
+      ],
+      "max_memory_peak_bytes": 348770304,
+      "recommended_memory": "1Gi"
+    },
+    {
+      "config": {
+        "cpu": "2",
+        "memory": "4Gi",
+        "container_concurrency": 0
+      },
+      "client_concurrency": 1,
+      "run_count": 3,
+      "valid_run_count": 3,
+      "passed_run_count": 3,
+      "passed_slo": true,
+      "recommendable": true,
+      "failure_reasons": [],
+      "warnings": [],
+      "prom_p95_worst": 0.37946428571428564,
+      "prom_rps_avg": 6.063657922179495,
+      "hey_rps_avg": 6.589233333333333,
+      "rps_diff_ratio": 0.07976275608500302,
+      "score_rps_per_cpu": 3.0318289610897473,
+      "cpu_usage_avg": 1.0810268369176927,
+      "cpu_usage_max": 1.2467639596917608,
+      "cpu_throttling_ratio_avg": 0.018292981699421965,
+      "cpu_throttling_ratio_max": 0.04744525547445256,
+      "memory_peak_bytes_by_run": [
+        295858176,
+        304054272,
+        301322240
+      ],
+      "max_memory_peak_bytes": 304054272,
+      "recommended_memory": "1Gi"
+    },
+    {
+      "config": {
+        "cpu": "4",
+        "memory": "4Gi",
+        "container_concurrency": 0
+      },
+      "client_concurrency": 2,
+      "run_count": 3,
+      "valid_run_count": 3,
+      "passed_run_count": 3,
+      "passed_slo": true,
+      "recommendable": true,
+      "failure_reasons": [],
+      "warnings": [],
+      "prom_p95_worst": 0.44304846938775516,
+      "prom_rps_avg": 10.03373309312353,
+      "hey_rps_avg": 10.347033333333334,
+      "rps_diff_ratio": 0.030279233681454968,
+      "score_rps_per_cpu": 2.5084332732808825,
+      "cpu_usage_avg": 1.622679359903965,
+      "cpu_usage_max": 1.8014464726245427,
+      "cpu_throttling_ratio_avg": 0.0,
+      "cpu_throttling_ratio_max": 0.0,
+      "memory_peak_bytes_by_run": [
+        308891648,
+        333283328,
+        335085568
+      ],
+      "max_memory_peak_bytes": 335085568,
+      "recommended_memory": "1Gi"
+    }
+  ],
+  "validation_summaries": [
+    {
+      "config": {
+        "cpu": "2",
+        "memory": "4Gi",
+        "container_concurrency": 1
+      },
+      "client_concurrency": 1,
+      "run_count": 2,
+      "valid_run_count": 2,
+      "passed_run_count": 2,
+      "passed_slo": true,
+      "recommendable": true,
+      "failure_reasons": [],
+      "warnings": [],
+      "prom_p95_worst": 0.26676829268292673,
+      "prom_rps_avg": 6.848319603792628,
+      "hey_rps_avg": 6.675750000000001,
+      "rps_diff_ratio": 0.025850219644628337,
+      "score_rps_per_cpu": 3.424159801896314,
+      "cpu_usage_avg": 1.1345395039937414,
+      "cpu_usage_max": 1.2177306332299285,
+      "cpu_throttling_ratio_avg": 0.0007212655455804923,
+      "cpu_throttling_ratio_max": 0.003125,
+      "memory_peak_bytes_by_run": [
+        295981056,
+        296497152
+      ],
+      "max_memory_peak_bytes": 296497152,
+      "recommended_memory": "1Gi"
+    },
+    {
+      "config": {
+        "cpu": "4",
+        "memory": "4Gi",
+        "container_concurrency": 2
+      },
+      "client_concurrency": 2,
+      "run_count": 2,
+      "valid_run_count": 2,
+      "passed_run_count": 2,
+      "passed_slo": true,
+      "recommendable": true,
+      "failure_reasons": [],
+      "warnings": [],
+      "prom_p95_worst": 0.47601809954751123,
+      "prom_rps_avg": 9.110588575782021,
+      "hey_rps_avg": 9.0246,
+      "rps_diff_ratio": 0.009528242335618374,
+      "score_rps_per_cpu": 2.2776471439455053,
+      "cpu_usage_avg": 1.5485719347664015,
+      "cpu_usage_max": 1.7539448209488757,
+      "cpu_throttling_ratio_avg": 0.0,
+      "cpu_throttling_ratio_max": 0.0,
+      "memory_peak_bytes_by_run": [
+        285433856,
+        292958208
+      ],
+      "max_memory_peak_bytes": 292958208,
+      "recommended_memory": "1Gi"
+    }
+  ],
+  "final_summaries": [],
+  "excluded_candidates": []
+}

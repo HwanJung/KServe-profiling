@@ -23,7 +23,7 @@ DEFAULT_OBSERVABILITY_NAMESPACE = "knative-serving"
 DEFAULT_OBSERVABILITY_CONFIGMAP = "config-observability"
 
 CPU_CANDIDATES = ("1", "2", "4")
-CLIENT_CONCURRENCY_CANDIDATES = (1, 2, 4, 8, 12, 16, 24, 32, 48, 64)
+CLIENT_CONCURRENCY_CANDIDATES = (1, 2, 4, 8, 16, 32, 64)
 
 FIXED_MEMORY = "4Gi"
 MEMORY_HEADROOM_FACTOR = 1.3
@@ -38,11 +38,13 @@ PREFLIGHT_RETRY_SECONDS = 5
 
 SLO_P95_SECONDS = 0.500
 BASELINE_REPEATS = 1
-EXPLORATION_REPEATS = 2
+REFINEMENT_REPEATS = 2
+VALIDATION_REPEATS = 2
 RPS_DIFF_WARN_RATIO = 0.15
 MAX_CPU_THROTTLING_AVG = 0.10
-MAX_CPU_THROTTLING_MAX = 0.20
-MAX_CPU_UTILIZATION_RATIO_AVG = 0.80
+MAX_CPU_THROTTLING_MAX = 0.10
+MIN_MARGINAL_RPS_EFFICIENCY = 0.70
+REFINEMENT_LINEAR_THRESHOLD = 8
 
 
 def positive_int(value: str) -> int:
@@ -145,7 +147,15 @@ def build_parser() -> argparse.ArgumentParser:
 
     parser.add_argument("--slo-p95-seconds", type=positive_float, default=SLO_P95_SECONDS)
     parser.add_argument("--baseline-repeats", type=positive_int, default=BASELINE_REPEATS)
-    parser.add_argument("--exploration-repeats", type=positive_int, default=EXPLORATION_REPEATS)
+    parser.add_argument("--refinement-repeats", type=positive_int, default=REFINEMENT_REPEATS)
+    parser.add_argument("--validation-repeats", type=positive_int, default=VALIDATION_REPEATS)
+    parser.add_argument(
+        "--exploration-repeats",
+        type=positive_int,
+        dest="validation_repeats",
+        default=argparse.SUPPRESS,
+        help="Deprecated alias for --validation-repeats.",
+    )
     parser.add_argument(
         "--memory-headroom-factor",
         type=positive_float,
@@ -165,10 +175,26 @@ def build_parser() -> argparse.ArgumentParser:
         help="Maximum peak CPU throttling ratio allowed for recommendations.",
     )
     parser.add_argument(
-        "--max-cpu-utilization-ratio-avg",
+        "--min-marginal-rps-efficiency",
         type=positive_float,
-        default=MAX_CPU_UTILIZATION_RATIO_AVG,
-        help="Maximum average CPU usage divided by CPU limit allowed for recommendations.",
+        default=MIN_MARGINAL_RPS_EFFICIENCY,
+        help=(
+            "Minimum RPS growth ratio divided by client concurrency growth ratio "
+            "required to keep increasing single-pod concurrency."
+        ),
+    )
+    parser.add_argument(
+        "--plateau-rps-growth-ratio",
+        type=positive_float,
+        dest="min_marginal_rps_efficiency",
+        default=argparse.SUPPRESS,
+        help="Deprecated alias for --min-marginal-rps-efficiency.",
+    )
+    parser.add_argument(
+        "--refinement-linear-threshold",
+        type=positive_int,
+        default=REFINEMENT_LINEAR_THRESHOLD,
+        help="Use linear refinement when bad_c - last_good_c is at or below this value.",
     )
     parser.add_argument(
         "--refresh-observability",
