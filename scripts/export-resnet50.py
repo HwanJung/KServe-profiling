@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export MobileNetV3Small as ONNX for KServe."""
+"""Export ResNet50 as ONNX for KServe."""
 
 from __future__ import annotations
 
@@ -10,13 +10,13 @@ import tensorflow as tf
 import tf2onnx
 
 
-DEFAULT_OUTPUT_PATH = "/pv/onnx-repository/mobilenet-v3-small/1/model.onnx"
+DEFAULT_OUTPUT_PATH = "/pv/onnx-repository/resnet50/1/model.onnx"
 DEFAULT_OPSET = 17
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Download ImageNet MobileNetV3Small weights and export an ONNX model.",
+        description="Download ImageNet ResNet50 weights and export an ONNX model.",
     )
     parser.add_argument(
         "--output-path",
@@ -37,15 +37,14 @@ def main() -> int:
     output_path = Path(args.output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    base_model = tf.keras.applications.MobileNetV3Small(
+    base_model = tf.keras.applications.ResNet50(
         weights="imagenet",
         include_top=True,
-        include_preprocessing=True,
         input_shape=(224, 224, 3),
     )
     inputs = tf.keras.Input(shape=(224, 224, 3), name="input", dtype=tf.float32)
     outputs = base_model(inputs, training=False)
-    model = tf.keras.Model(inputs=inputs, outputs=outputs, name="mobilenet_v3_small")
+    model = tf.keras.Model(inputs=inputs, outputs=outputs, name="resnet50")
 
     input_signature = (
         tf.TensorSpec((None, 224, 224, 3), tf.float32, name="input"),
@@ -57,7 +56,7 @@ def main() -> int:
         output_path=str(output_path),
     )
 
-    print(f"Exported MobileNetV3Small ONNX model to {output_path}")
+    print(f"Exported ResNet50 ONNX model to {output_path}")
     return 0
 
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export MobileNetV3Large as a TensorFlow SavedModel for KServe."""
+"""Export MobileNetV3Large as ONNX for KServe."""
 
 from __future__ import annotations
 
@@ -7,46 +7,57 @@ import argparse
 from pathlib import Path
 
 import tensorflow as tf
+import tf2onnx
 
 
-DEFAULT_OUTPUT_DIR = "/pv/mobilenet-v3-large/1"
+DEFAULT_OUTPUT_PATH = "/pv/onnx-repository/mobilenet-v3-large/1/model.onnx"
+DEFAULT_OPSET = 17
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Download ImageNet MobileNetV3Large weights and export a SavedModel.",
+        description="Download ImageNet MobileNetV3Large weights and export an ONNX model.",
     )
     parser.add_argument(
-        "--output-dir",
-        default=DEFAULT_OUTPUT_DIR,
-        help=f"SavedModel version directory to write. Default: {DEFAULT_OUTPUT_DIR}",
+        "--output-path",
+        default=DEFAULT_OUTPUT_PATH,
+        help=f"ONNX model path to write. Default: {DEFAULT_OUTPUT_PATH}",
+    )
+    parser.add_argument(
+        "--opset",
+        type=int,
+        default=DEFAULT_OPSET,
+        help=f"ONNX opset version. Default: {DEFAULT_OPSET}",
     )
     return parser
 
 
 def main() -> int:
     args = build_parser().parse_args()
-    output_dir = Path(args.output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
+    output_path = Path(args.output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    model = tf.keras.applications.MobileNetV3Large(
+    base_model = tf.keras.applications.MobileNetV3Large(
         weights="imagenet",
         include_top=True,
         include_preprocessing=True,
         input_shape=(224, 224, 3),
     )
+    inputs = tf.keras.Input(shape=(224, 224, 3), name="input", dtype=tf.float32)
+    outputs = base_model(inputs, training=False)
+    model = tf.keras.Model(inputs=inputs, outputs=outputs, name="mobilenet_v3_large")
 
-    # Build the serving signature before export so TensorFlow Serving sees a
-    # stable float32 NHWC input.
-    sample = tf.zeros((1, 224, 224, 3), dtype=tf.float32)
-    _ = model(sample, training=False)
+    input_signature = (
+        tf.TensorSpec((None, 224, 224, 3), tf.float32, name="input"),
+    )
+    tf2onnx.convert.from_keras(
+        model,
+        input_signature=input_signature,
+        opset=args.opset,
+        output_path=str(output_path),
+    )
 
-    if hasattr(model, "export"):
-        model.export(str(output_dir))
-    else:
-        tf.saved_model.save(model, str(output_dir))
-
-    print(f"Exported MobileNetV3Large SavedModel to {output_dir}")
+    print(f"Exported MobileNetV3Large ONNX model to {output_path}")
     return 0
 
 

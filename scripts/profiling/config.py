@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 DEFAULT_PROM_URL = "http://localhost:9090"
-DEFAULT_TARGET_URL = "http://localhost:8080/v1/models/mobilenet-v3-large:predict"
+DEFAULT_TARGET_URL = "http://localhost:8080/v2/models/mobilenet-v3-large/infer"
 DEFAULT_HOST_HEADER = "mobilenet-v3-large.kserve-test.example.com"
 DEFAULT_PAYLOAD_FILE = "config/input.json"
 DEFAULT_OUTPUT_DIR = "results"

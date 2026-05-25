@@ -13,10 +13,11 @@ spec:
     maxReplicas: 1
     containerConcurrency: 0
     model:
+      protocolVersion: v2
       modelFormat:
-        name: tensorflow
-      runtime: kserve-tensorflow-serving
-      storageUri: "pvc://resnet-pvc/mobilenet-v3-large/"
+        name: onnx
+      runtime: kserve-tritonserver
+      storageUri: "pvc://resnet-pvc/onnx-repository/"
       resources:
         requests:
           cpu: "1"

@@ -10,7 +10,7 @@ spec:
       persistentVolumeClaim:
         claimName: resnet-pvc
   containers:
-    - name: tensorflow
+    - name: model-export
       image: tensorflow/tensorflow:2.16.1
       command: ["sleep"]
       args: ["infinity"]

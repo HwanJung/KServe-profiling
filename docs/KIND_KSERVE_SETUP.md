@@ -198,9 +198,7 @@ kubectl get pv,pvc -A
 현재 모델 경로:
 
 ```text
-/pv/resnet/123/saved_model.pb
-/pv/resnet/123/variables/variables.index
-/pv/resnet/123/variables/variables.data-00000-of-00001
+/pv/resnet/model.onnx
 ```
 
 확인 명령:
@@ -231,8 +229,8 @@ spec:
     containerConcurrency: 0
     model:
       modelFormat:
-        name: tensorflow
-      runtime: kserve-tensorflow-serving
+        name: onnx
+      protocolVersion: v2
       storageUri: "pvc://resnet-pvc/resnet/"
       resources:
         requests:
@@ -251,7 +249,7 @@ spec:
 | URL | `http://resnet50-cpu2.kserve-test.example.com` |
 | Ready | `True` |
 | Deployment mode | `Knative` |
-| Runtime | `kserve-tensorflow-serving` |
+| Runtime | KServe default ONNX runtime |
 | Model state | `Loaded` |
 | Revision | `resnet50-cpu2-predictor-00001` |
 
@@ -291,7 +289,7 @@ curl -v \
   -H "Host: resnet50-cpu2.kserve-test.example.com" \
   -H "Content-Type: application/json" \
   --data @input.json \
-  http://localhost:8080/v1/models/resnet50-cpu2:predict
+  http://localhost:8080/v2/models/resnet50-cpu2/infer
 ```
 
 ## 8. 부하 테스트 스크립트
@@ -303,7 +301,7 @@ curl -v \
 | 항목 | 값 |
 | --- | --- |
 | Prometheus | `http://localhost:9090` |
-| Target | `http://localhost:8080/v1/models/resnet50-cpu2:predict` |
+| Target | `http://localhost:8080/v2/models/resnet50-cpu2/infer` |
 | Payload | `input.json` |
 | 결과 파일 | `sweep_results.json` |
 | 동시성 범위 | `1` - `10` |
@@ -351,7 +349,7 @@ kubectl apply -f config-observability.yaml
 kubectl apply -f pv-pvc.yaml
 kubectl apply -f model-store-pod.yaml
 
-# 5. PVC에 TensorFlow SavedModel 배치
+# 5. PVC에 ONNX model.onnx 배치
 kubectl exec -n kserve-test -it model-store-pod -- bash
 
 # 6. InferenceService 배포
