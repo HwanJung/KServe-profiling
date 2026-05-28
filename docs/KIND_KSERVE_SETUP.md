@@ -2,6 +2,21 @@
 
 작성 기준: 2026-05-11, 현재 kube-context `kind-knative-cluster`
 
+## 빠른 목차
+
+| 섹션 | 내용 |
+| --- | --- |
+| [1. 클러스터 개요](#1-클러스터-개요) | kind cluster와 node 상태 |
+| [2. KServe 설치](#2-kserve-설치) | quick install과 Helm 릴리스 |
+| [3. Knative Serving 설정](#3-knative-serving-설정) | queue sidecar, domain, registry 설정 |
+| [4. 관측성 설정](#4-관측성-설정) | Prometheus/OTLP 설정 |
+| [5. 모델 저장소 PVC](#5-모델-저장소-pvc) | PV/PVC와 모델 파일 위치 |
+| [6. ResNet50 InferenceService](#6-resnet50-inferenceservice) | ResNet 배포 설정 |
+| [7. Istio Ingress Gateway](#7-istio-ingress-gateway) | ingress 접속과 port-forward |
+| [8. 부하 테스트 스크립트](#8-부하-테스트-스크립트) | `hey` 부하 테스트 |
+| [9. 전체 재적용 순서](#9-전체-재적용-순서) | 처음부터 다시 적용하는 순서 |
+| [10. 상태 점검 명령 모음](#10-상태-점검-명령-모음) | 점검용 명령 모음 |
+
 ## 1. 클러스터 개요
 
 현재 로컬 kind 환경에는 `kind`, `knative-cluster` 두 클러스터가 있고, 실습에 사용 중인 컨텍스트는 `kind-knative-cluster`이다.

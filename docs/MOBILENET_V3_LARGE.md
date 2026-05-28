@@ -3,6 +3,15 @@
 This guide adds MobileNetV3Large beside the existing ResNet50 service so both
 models can be compared with the same KServe and profiling workflow.
 
+## 빠른 목차
+
+| 섹션 | 내용 |
+| --- | --- |
+| [1. Export the ONNX Model](#1-export-the-onnx-model) | 모델 export pod 준비와 ONNX 생성 |
+| [2. Deploy the InferenceService](#2-deploy-the-inferenceservice) | KServe InferenceService 배포 |
+| [3. Smoke Test](#3-smoke-test) | `curl` 요청 테스트 |
+| [4. Profile MobileNetV3Large](#4-profile-mobilenetv3large) | profiling script 실행과 결과 파일 |
+
 ## 1. Export the ONNX Model
 
 Create a temporary model export pod that mounts the existing model PVC.
@@ -70,16 +79,13 @@ curl -v \
 
 ## 4. Profile MobileNetV3Large
 
-Run the existing profiling script with MobileNet-specific service names. By
+Run the profiling script with the built-in local cluster and model profile. By
 default, output files are saved under `results/mobilenet-v3-large/`.
 
 ```bash
 python scripts/profiling-script.py \
-  --target-url http://localhost:8080/v2/models/mobilenet-v3-large/infer \
-  --host-header mobilenet-v3-large.kserve-test.example.com \
-  --inferenceservice mobilenet-v3-large \
-  --kn-service mobilenet-v3-large-predictor \
-  --cpus 500m,1,2
+  --cluster local \
+  --model mobilenet-v3-large
 ```
 
 The generated files are:
@@ -91,3 +97,9 @@ results/mobilenet-v3-large/profiling_summary.json
 
 To use a custom location, pass `--output-dir`. To preserve the old flat file
 layout, pass `--results-file` and `--summary-file` explicitly.
+
+## Related Docs
+
+- [CLI command reference](./CLI_COMMANDS.md)
+- [Metrics collection](./METRICS_COLLECTION.md)
+- [Profiling plan](./profiling-plan.md)

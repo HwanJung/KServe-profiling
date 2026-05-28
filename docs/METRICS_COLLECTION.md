@@ -2,6 +2,17 @@
 
 이 문서는 현재 kind KServe 클러스터에서 Prometheus가 수집하는 추론 요청 메트릭 형태를 정리한다.
 
+## 빠른 목차
+
+| 섹션 | 내용 |
+| --- | --- |
+| [구성](#구성) | Prometheus, InferenceService, queue-proxy 기준 정보 |
+| [관찰된 요청 메트릭](#관찰된-요청-메트릭) | 사용 가능한 latency/RPS metric |
+| [주요 라벨 구조](#주요-라벨-구조) | PromQL filter에 필요한 label |
+| [Profiling PromQL](#profiling-promql) | request, CPU, memory query |
+| [조회 명령](#조회-명령) | `curl` 기반 Prometheus API 예시 |
+| [참고 사항](#참고-사항) | metric 해석 시 주의점 |
+
 ## 구성
 
 | 항목 | 값 |

@@ -15,3 +15,8 @@ KServe practice workspace organized by purpose.
 ## Conventions
 
 - [Python 주석 컨벤션](docs/PYTHON_COMMENT_CONVENTION.md)
+
+## Docs
+
+- [문서 인덱스](docs/README.md)
+- [CLI 명령어 정리](docs/CLI_COMMANDS.md)

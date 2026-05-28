@@ -1,5 +1,18 @@
 # Python 주석 컨벤션
 
+## 빠른 목차
+
+| 섹션 | 내용 |
+| --- | --- |
+| [목적](#목적) | 주석을 쓰는 기본 원칙 |
+| [언어](#언어) | 한글 docstring/comment 기준 |
+| [모듈 Docstring](#모듈-docstring) | 모듈 설명 작성 기준 |
+| [함수와 클래스 Docstring](#함수와-클래스-docstring) | 공개 API와 helper 구분 |
+| [인라인 주석](#인라인-주석) | 필요한 경우와 피해야 할 경우 |
+| [TODO 주석](#todo-주석) | TODO 작성 방식 |
+| [Shebangs](#shebangs) | 실행 스크립트 shebang 기준 |
+| [포맷](#포맷) | formatter와 line length 기준 |
+
 ## 목적
 
 Python 코드는 먼저 이름, 구조, 작은 함수만으로 읽히는 것을 목표로 한다. 주석은 코드만으로 드러나지 않는 의도, 제약, 운영 맥락을 보완할 때만 사용한다.

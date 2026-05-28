@@ -1,5 +1,17 @@
 # KServe Predictor Pod Profiling Plan
 
+## 빠른 목차
+
+| 섹션 | 내용 |
+| --- | --- |
+| [Goal](#goal) | profiling 목표와 기본 전제 |
+| [Metrics Setup](#metrics-setup) | metric export와 Prometheus 설정 |
+| [Measurement Settings](#measurement-settings) | 측정 시간, 후보군, threshold |
+| [Experiment Procedure](#experiment-procedure) | baseline, refinement, validation 순서 |
+| [Scoring](#scoring) | valid run과 추천 후보 판정 기준 |
+| [Output](#output) | 최종 결과에 남길 항목 |
+| [Assumptions](#assumptions) | 실험 범위와 가정 |
+
 ## Goal
 
 - 목적은 single predictor pod에서 `p95 <= 500ms`와 CPU 안정성 기준을 만족하면서 가장 효율이 좋은 Pod spec을 찾는 것이다. CPU와 `containerConcurrency`는 한 Pod 안에서 효율적으로 처리할 수 있는 지점까지만 키우고, 그 이후의 전체 처리량 증가는 replica/autoscaling으로 확장하는 것을 전제로 한다.
