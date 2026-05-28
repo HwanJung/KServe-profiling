@@ -1,3 +1,5 @@
+"""Profiling 스크립트에서 공유하는 파일과 subprocess helper를 제공한다."""
+
 from __future__ import annotations
 
 import json
@@ -14,6 +16,7 @@ def write_json(path: Path, payload: Any) -> None:
 
 
 def run_subprocess(cmd: list[str], timeout: int) -> subprocess.CompletedProcess[str]:
+    """timeout도 일반 종료 결과처럼 기록할 수 있게 CompletedProcess로 변환한다."""
     try:
         return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
     except subprocess.TimeoutExpired as exc:

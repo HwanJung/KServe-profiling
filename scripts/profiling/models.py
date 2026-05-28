@@ -1,3 +1,5 @@
+"""Profiling 실행 결과와 후보 설정의 자료구조를 정의한다."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -12,6 +14,7 @@ class ProfileConfig:
 
     @property
     def cpu_float(self) -> float:
+        """Kubernetes CPU 단위를 scoring에 쓰는 core 수로 변환한다."""
         if self.cpu.endswith("m"):
             return float(self.cpu[:-1]) / 1000.0
         return float(self.cpu)

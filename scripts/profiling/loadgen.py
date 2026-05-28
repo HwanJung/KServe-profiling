@@ -1,3 +1,5 @@
+"""hey로 KServe v2 infer 요청 부하를 만들고 결과를 파싱한다."""
+
 from __future__ import annotations
 
 import argparse
@@ -10,10 +12,13 @@ from .utils import run_subprocess
 
 
 class HeyClient:
+    """hey CLI 호출을 profiling 설정에 맞게 구성한다."""
+
     def __init__(self, args: argparse.Namespace) -> None:
         self.args = args
 
     def preflight_request(self) -> None:
+        """본 측정 전에 단일 요청이 정상 응답하는지 확인한다."""
         last_error = "preflight was not attempted"
         for attempt in range(1, self.args.preflight_attempts + 1):
             proc = run_subprocess(
@@ -78,6 +83,7 @@ class HeyClient:
 
 
 def parse_hey(stdout: str) -> HeyStats:
+    """hey stdout에서 처리량, p95, status count, 오류 요약을 추출한다."""
     rps = first_float(stdout, r"Requests/sec:\s+([0-9.]+)")
     p95 = first_float(stdout, r"95%\s+(?:in\s+)?([0-9.]+)\s+secs")
 
@@ -88,6 +94,7 @@ def parse_hey(stdout: str) -> HeyStats:
 
     errors: list[str] = []
     in_error_distribution = False
+    # hey는 일부 네트워크 오류를 return code보다 stdout 요약에 더 자세히 남긴다.
     for line in stdout.splitlines():
         stripped = line.strip()
         if "connection refused" in stripped.lower():

@@ -1,3 +1,5 @@
+"""Prometheus에서 KServe 요청, CPU, memory metric을 수집한다."""
+
 from __future__ import annotations
 
 import argparse
@@ -12,6 +14,8 @@ from .models import MetricSnapshot
 
 
 class PrometheusClient:
+    """Profiling 구간에 해당하는 PromQL query를 실행한다."""
+
     def __init__(self, args: argparse.Namespace) -> None:
         self.args = args
 
@@ -19,11 +23,14 @@ class PrometheusClient:
         self.query("up", timeout=10)
 
     def collect(self, start_ts: float, end_ts: float) -> MetricSnapshot:
+        """부하 측정 구간의 요청 지표와 container resource 지표를 모은다."""
+        # rate window가 측정 시작 이전을 참조하지 않도록 CPU 구간을 늦춘다.
         cpu_query_start = start_ts + duration_seconds(self.args.cpu_rate_window)
         if cpu_query_start >= end_ts:
             cpu_query_start = start_ts
 
         measurement_seconds = end_ts - start_ts
+        # Knative request metric은 scrape 지연을 감안해 측정 종료 뒤에서 평가한다.
         request_eval_ts = end_ts + self.args.scrape_lag_seconds
         request_window = promql_duration(measurement_seconds + self.args.scrape_lag_seconds)
         latency_value = self.instant_value(self.latency_query(request_window), request_eval_ts)
@@ -79,6 +86,7 @@ histogram_quantile(
 """.strip()
 
     def rps_query(self, request_window: str, measurement_seconds: float) -> str:
+        # scrape lag를 포함해 누락을 줄이되, RPS 분모는 실제 부하 시간으로 유지한다.
         return f"""
 sum(
   increase(http_server_request_duration_seconds_count{{
@@ -117,6 +125,7 @@ sum(rate(container_cpu_cfs_periods_total{{
 
     def memory_query(self) -> str:
         pod_pattern = f"{self.args.kn_service}-.*"
+        # app container와 queue-proxy를 함께 보되 pause container는 제외한다.
         return f"""
 sum(
   container_memory_working_set_bytes{{
@@ -191,6 +200,7 @@ sum(
 
 
 def duration_seconds(value: str) -> int:
+    """Prometheus duration literal을 초 단위로 변환한다."""
     match = re.fullmatch(r"(\d+)([smhd])", value)
     if not match:
         return 0
@@ -200,4 +210,5 @@ def duration_seconds(value: str) -> int:
 
 
 def promql_duration(seconds: float) -> str:
+    """PromQL range selector에 들어갈 최소 1초 duration을 만든다."""
     return f"{max(1, math.ceil(seconds))}s"

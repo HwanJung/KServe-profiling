@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export ResNet50 as ONNX for KServe."""
+"""ResNet50 모델을 KServe용 ONNX로 내보낸다."""
 
 from __future__ import annotations
 
@@ -42,6 +42,7 @@ def main() -> int:
         include_top=True,
         input_shape=(224, 224, 3),
     )
+    # KServe v2 infer 요청의 입력 이름과 배치 차원을 ONNX signature에 고정한다.
     inputs = tf.keras.Input(shape=(224, 224, 3), name="input", dtype=tf.float32)
     outputs = base_model(inputs, training=False)
     model = tf.keras.Model(inputs=inputs, outputs=outputs, name="resnet50")

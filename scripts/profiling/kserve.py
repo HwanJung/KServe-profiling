@@ -1,3 +1,5 @@
+"""KServe와 Knative 리소스를 profiling 후보 설정으로 조정한다."""
+
 from __future__ import annotations
 
 import argparse
@@ -11,10 +13,13 @@ from .utils import check_call, kubectl_json
 
 
 class KServeClient:
+    """kubectl을 통해 profiling 대상 InferenceService를 관리한다."""
+
     def __init__(self, args: argparse.Namespace) -> None:
         self.args = args
 
     def configure_observability(self) -> None:
+        """Knative request metric export interval을 profiling 간격에 맞춘다."""
         patch = {
             "data": {
                 "request-metrics-export-interval": self.args.request_metrics_export_interval
@@ -37,6 +42,7 @@ class KServeClient:
         )
 
     def refresh_observability_revision(self) -> None:
+        """annotation 변경으로 새 Revision을 만들어 metric 설정을 다시 반영한다."""
         patch = {
             "metadata": {
                 "annotations": {
@@ -70,6 +76,7 @@ class KServeClient:
         manifest = self.build_candidate_manifest(config)
         temp_path = self.write_temp_manifest(manifest)
         try:
+            # kubectl apply는 파일 입력이 가장 안정적이라 임시 manifest를 사용한다.
             check_call(
                 [
                     "kubectl",
@@ -98,6 +105,7 @@ class KServeClient:
         )
 
     def build_candidate_manifest(self, config: ProfileConfig) -> dict:
+        """기준 manifest를 재적용 가능한 후보 InferenceService manifest로 바꾼다."""
         manifest = kubectl_json(
             [
                 "kubectl",
@@ -130,6 +138,7 @@ class KServeClient:
         metadata = manifest.setdefault("metadata", {})
         metadata["name"] = self.args.inferenceservice
         metadata["namespace"] = self.args.namespace
+        # 서버가 관리하는 필드를 제거해 dry-run 결과를 다시 적용할 수 있게 한다.
         for key in (
             "creationTimestamp",
             "generation",
@@ -142,6 +151,7 @@ class KServeClient:
             annotations.pop("kubectl.kubernetes.io/last-applied-configuration", None)
 
         predictor = manifest.setdefault("spec", {}).setdefault("predictor", {})
+        # 단일 pod 성능을 비교하기 위해 autoscaling 영향을 배제한다.
         predictor["minReplicas"] = 1
         predictor["maxReplicas"] = 1
         predictor["containerConcurrency"] = config.container_concurrency
@@ -180,6 +190,7 @@ class KServeClient:
             ],
             timeout=self.args.ready_timeout_seconds + 30,
         )
+        # Ready 직후에는 Knative 라우팅과 metric scrape가 따라오는 시간이 필요하다.
         time.sleep(self.args.cooldown_seconds)
 
     def pod_restarts(self) -> dict[str, int]:
@@ -196,6 +207,7 @@ class KServeClient:
         return restarts
 
     def oom_killed_pods(self) -> list[str]:
+        """마지막 종료 상태 기준으로 OOMKilled가 발생한 pod를 찾는다."""
         if self.args.no_apply:
             return []
         pods: list[str] = []

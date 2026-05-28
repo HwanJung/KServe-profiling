@@ -1,3 +1,5 @@
+"""KServe profiling의 baseline 탐색, 검증, 결과 저장 흐름을 조율한다."""
+
 from __future__ import annotations
 
 import argparse
@@ -21,6 +23,8 @@ from .utils import write_json
 
 
 class Profiler:
+    """CPU와 concurrency 후보를 측정해 운영 추천값을 만든다."""
+
     def __init__(self, args: argparse.Namespace) -> None:
         self.args = args
         self.results: list[RunResult] = []
@@ -78,6 +82,7 @@ class Profiler:
         return payload
 
     def run_baseline(self) -> list[ProfileConfig]:
+        """CPU별로 SLO와 RPS 증가율을 만족하는 안정 client concurrency를 찾는다."""
         configs: list[ProfileConfig] = []
         for cpu in self.args.cpus:
             config = ProfileConfig(cpu, self.args.fixed_memory, 0)
@@ -101,6 +106,7 @@ class Profiler:
         return configs
 
     def scan_baseline(self, config: ProfileConfig) -> BaselineBoundary | None:
+        """coarse 후보를 훑고 첫 실패 구간을 세밀하게 보정한다."""
         measured: dict[int, BaselinePoint] = {}
         coarse = sorted(set(self.args.client_concurrencies))
         if not coarse:
@@ -174,6 +180,7 @@ class Profiler:
 
         if high_c - low_c > self.args.refinement_linear_threshold:
             method = "binary_then_linear"
+            # 넓은 구간은 binary로 좁힌 뒤 인접 concurrency를 linear로 확인한다.
             while high_c - low_c > self.args.refinement_linear_threshold:
                 mid_c = (low_c + high_c) // 2
                 if mid_c in measured:
@@ -208,6 +215,7 @@ class Profiler:
         config: ProfileConfig,
         measured: dict[int, BaselinePoint],
     ) -> None:
+        """경계 양쪽 점을 한 번 더 측정해 일시적 흔들림을 줄인다."""
         confirmed: set[int] = set()
         while True:
             boundary = self.boundary_from_points(measured, "confirmation")
@@ -264,6 +272,7 @@ class Profiler:
         previous_good: BaselinePoint | None,
         current: BaselinePoint,
     ) -> bool:
+        """SLO 실패 또는 낮은 marginal RPS 효율을 saturation 경계로 본다."""
         if not current.passed:
             return True
         if previous_good is None:
@@ -294,6 +303,7 @@ class Profiler:
         config: ProfileConfig,
         client_concurrency: int,
     ) -> RunResult:
+        """권장 memory로 낮춘 최종 후보가 SLO와 CPU 안정성을 유지하는지 확인한다."""
         print_apply_start("memory_revalidation", config)
         self.prepare_config(config)
         result = self.run_once("memory_revalidation", config, client_concurrency, 1)
@@ -331,6 +341,7 @@ class Profiler:
             flush=True,
         )
 
+        # warmup 요청은 cold start와 JIT/캐시 영향을 본 측정에서 분리한다.
         self.hey.run(seconds=self.args.warmup_seconds, client_concurrency=client_concurrency)
         time.sleep(self.args.scrape_lag_seconds)
 
@@ -343,6 +354,7 @@ class Profiler:
         end_ts = time.time()
         restarts_after = self.kserve.pod_restarts()
 
+        # 종료 직후 scrape되지 않은 request metric을 Prometheus가 수집할 시간을 둔다.
         time.sleep(self.args.scrape_lag_seconds)
 
         hey_stats = parse_hey(proc.stdout)
@@ -526,6 +538,7 @@ def marginal_rps_efficiency(
     previous: BaselinePoint,
     current: BaselinePoint,
 ) -> float | None:
+    """concurrency 증가율 대비 RPS 증가율을 계산한다."""
     if previous.prom_rps_avg is None or previous.prom_rps_avg <= 0:
         return None
     if current.prom_rps_avg is None:
@@ -557,6 +570,7 @@ def failure_reasons_for_run(
     restarts_after: dict[str, int],
     oom_killed: list[str],
 ) -> list[str]:
+    """run 단위 결과를 무효로 만드는 실패 원인을 모은다."""
     reasons = list(metric_failures)
     if proc_returncode != 0:
         reasons.append(f"hey exited with code {proc_returncode}")
@@ -590,6 +604,7 @@ def warning_reasons(
     hey_rps: float | None,
     warn_ratio: float,
 ) -> list[str]:
+    """Prometheus와 hey 처리량 차이가 큰 경우 경고를 만든다."""
     if prom_rps_avg is None or hey_rps is None or hey_rps <= 0:
         return []
     diff_ratio = abs(prom_rps_avg - hey_rps) / hey_rps

@@ -1,3 +1,5 @@
+"""Profiling CLI 기본값과 인자 파싱 규칙을 정의한다."""
+
 from __future__ import annotations
 
 import argparse
@@ -70,6 +72,7 @@ def comma_ints(value: str) -> list[int]:
 
 
 def derive_model_name(args: argparse.Namespace) -> str:
+    """CLI 인자나 추론 URL에서 모델 이름을 가져온다."""
     if args.model_name:
         return args.model_name
 

@@ -1,3 +1,5 @@
+"""Profiling run을 후보별 summary와 추천 결과로 집계한다."""
+
 from __future__ import annotations
 
 import argparse
@@ -17,6 +19,7 @@ def summarize_config(
     runs: list[RunResult],
     args: argparse.Namespace,
 ) -> CandidateSummary:
+    """동일 후보의 반복 측정 결과를 recommendation에 쓰는 단일 summary로 줄인다."""
     matching_runs = [
         item
         for item in runs
@@ -68,6 +71,7 @@ def summarize_config(
         and prom_p95_worst is not None
         and prom_p95_worst <= args.slo_p95_seconds
     )
+    # latency가 좋아도 throttling이 크면 같은 설정을 운영 권장값에서 제외한다.
     cpu_stability_failures = cpu_stability_failure_reasons(
         args=args,
         cpu_throttling_ratio_avg=cpu_throttling_ratio_avg,
@@ -83,6 +87,7 @@ def summarize_config(
     score = prom_rps_avg / config.cpu_float if recommendable and prom_rps_avg is not None else None
 
     max_memory_peak = max(memory_peaks) if memory_peaks else None
+    # 메모리 추천값은 측정 peak에 여유율을 곱한 뒤 Gi 단위로 올림한다.
     recommended_memory = (
         memory_with_headroom(max_memory_peak, args.memory_headroom_factor)
         if max_memory_peak is not None
@@ -115,6 +120,7 @@ def summarize_config(
 
 
 def pick_recommendation(summaries: list[CandidateSummary]) -> CandidateSummary | None:
+    """RPS per CPU가 가장 높은 recommendable 후보를 고른다."""
     valid = [item for item in summaries if item.score_rps_per_cpu is not None]
     if not valid:
         return None
@@ -152,6 +158,7 @@ def excluded_candidates(
     summaries: list[CandidateSummary],
     args: argparse.Namespace,
 ) -> list[dict]:
+    """추천에서 제외된 후보와 제외 이유를 summary에 남긴다."""
     excluded: list[dict] = []
     for item in summaries:
         if item.score_rps_per_cpu is not None:

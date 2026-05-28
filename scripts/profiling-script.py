@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+"""KServe InferenceService 후보 설정에 대한 profiling을 실행한다."""
+
 from __future__ import annotations
 
 import json
