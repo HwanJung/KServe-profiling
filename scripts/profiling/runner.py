@@ -449,10 +449,12 @@ class Profiler:
         return {
             "metadata": {
                 "created_at": time.time(),
+                "cluster": self.args.cluster,
                 "target_url": self.args.target_url,
                 "model_name": self.args.model_name,
                 "host_header": self.args.host_header,
                 "prometheus_url": self.args.prom_url,
+                "kube_context": self.args.kube_context,
                 "namespace": self.args.namespace,
                 "inference_service": self.args.inferenceservice,
                 "kn_service": self.args.kn_service,

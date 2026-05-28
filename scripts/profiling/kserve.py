@@ -18,6 +18,13 @@ class KServeClient:
     def __init__(self, args: argparse.Namespace) -> None:
         self.args = args
 
+    def kubectl(self, *args: str) -> list[str]:
+        cmd = ["kubectl"]
+        if self.args.kube_context:
+            cmd.extend(["--context", self.args.kube_context])
+        cmd.extend(args)
+        return cmd
+
     def configure_observability(self) -> None:
         """Knative request metric export interval을 profiling 간격에 맞춘다."""
         patch = {
@@ -26,8 +33,7 @@ class KServeClient:
             }
         }
         check_call(
-            [
-                "kubectl",
+            self.kubectl(
                 "patch",
                 "cm",
                 self.args.observability_configmap,
@@ -37,7 +43,7 @@ class KServeClient:
                 "merge",
                 "-p",
                 json.dumps(patch),
-            ],
+            ),
             timeout=60,
         )
 
@@ -51,8 +57,7 @@ class KServeClient:
             }
         }
         check_call(
-            [
-                "kubectl",
+            self.kubectl(
                 "patch",
                 "inferenceservice",
                 self.args.inferenceservice,
@@ -61,7 +66,7 @@ class KServeClient:
                 "--type=merge",
                 "-p",
                 json.dumps(patch),
-            ],
+            ),
             timeout=60,
         )
 
@@ -78,12 +83,11 @@ class KServeClient:
         try:
             # kubectl apply는 파일 입력이 가장 안정적이라 임시 manifest를 사용한다.
             check_call(
-                [
-                    "kubectl",
+                self.kubectl(
                     "apply",
                     "-f",
                     str(temp_path),
-                ],
+                ),
                 timeout=60,
             )
         finally:
@@ -91,8 +95,7 @@ class KServeClient:
 
     def delete_inferenceservice(self) -> None:
         check_call(
-            [
-                "kubectl",
+            self.kubectl(
                 "delete",
                 "inferenceservice",
                 self.args.inferenceservice,
@@ -100,22 +103,21 @@ class KServeClient:
                 self.args.namespace,
                 "--ignore-not-found=true",
                 "--wait=true",
-            ],
+            ),
             timeout=self.args.ready_timeout_seconds + 30,
         )
 
     def build_candidate_manifest(self, config: ProfileConfig) -> dict:
         """기준 manifest를 재적용 가능한 후보 InferenceService manifest로 바꾼다."""
         manifest = kubectl_json(
-            [
-                "kubectl",
+            self.kubectl(
                 "apply",
                 "--dry-run=client",
                 "-f",
                 self.args.inferenceservice_manifest,
                 "-o",
                 "json",
-            ],
+            ),
             timeout=60,
         )
         if manifest.get("kind") == "List":
@@ -178,8 +180,7 @@ class KServeClient:
 
     def wait_ready(self) -> None:
         check_call(
-            [
-                "kubectl",
+            self.kubectl(
                 "wait",
                 "inferenceservice",
                 self.args.inferenceservice,
@@ -187,7 +188,7 @@ class KServeClient:
                 self.args.namespace,
                 "--for=condition=Ready",
                 f"--timeout={self.args.ready_timeout_seconds}s",
-            ],
+            ),
             timeout=self.args.ready_timeout_seconds + 30,
         )
         # Ready 직후에는 Knative 라우팅과 metric scrape가 따라오는 시간이 필요하다.
@@ -222,8 +223,7 @@ class KServeClient:
 
     def _pod_payload(self) -> dict:
         return kubectl_json(
-            [
-                "kubectl",
+            self.kubectl(
                 "get",
                 "pods",
                 "-n",
@@ -232,6 +232,6 @@ class KServeClient:
                 f"serving.knative.dev/service={self.args.kn_service}",
                 "-o",
                 "json",
-            ],
+            ),
             timeout=60,
         )

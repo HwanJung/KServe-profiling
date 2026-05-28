@@ -5,12 +5,12 @@ from __future__ import annotations
 
 import json
 
-from profiling.config import build_parser, normalize_output_paths
+from profiling.config import build_parser, resolve_config
 from profiling.runner import Profiler
 
 
 def main() -> int:
-    args = normalize_output_paths(build_parser().parse_args())
+    args = resolve_config(build_parser().parse_args())
     summary = Profiler(args).run()
     print("\n=== Recommendation ===")
     print(json.dumps(summary["recommendation"], indent=2))
